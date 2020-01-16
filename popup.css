@@ -1,0 +1,53 @@
+.weergegevens {
+    width: 500px;
+}
+img.kaart {
+    /*width: 470px;*/
+}
+.warning {
+    color: orange;
+    max-width: 500px;
+    margin: 0 0 12px 12px;
+    display: none;
+}
+.temp {
+    color: blue;
+}
+
+.wind {
+    color: darkgreen;
+}
+
+.zon {
+    color: #ff723b;
+}
+
+.error {
+    color: red;
+    padding: 8px;
+}
+.weertabel td {
+    vertical-align: top;
+    padding: 4px 16px;
+}
+.created {
+    float: right;
+    padding-right: 8px;
+}
+.banner {
+    display: flex;
+    justify-content: space-between;
+    padding-right: 36px;
+}
+.weertabel {
+    position: absolute;
+    top: 520px;
+    width: 400px;
+    background-color: rgba(200, 200, 200, .7);
+    right: 20px;
+}
+#icon {
+    position: absolute;
+    top: 0;
+    right: 12px;
+}

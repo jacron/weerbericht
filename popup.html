@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>weerbericht</title>
+    <link href="popup.css" rel="stylesheet" type="text/css">
+    <link rel="favicon" href="images/weerbericht48.png">
+</head>
+<body>
+<div class="content">
+    <div class="weergegevens">
+        <div class="banner">
+            <div id="created"></div>
+            <div id="plaats"></div>
+            <div>
+                <span id="verw"></span>
+                <img src="" id="icon" alt="icon">
+            </div>
+        </div>
+        <div class="warning" id="alarmtxt"></div>
+        <table class="weertabel">
+            <tbody>
+            <tr>
+                <td>
+                    <div class="temp">
+                        <div>
+                            <span>temperatuur:</span>
+                            <span id="temp"></span>
+                        </div>
+                        <div>
+                            <span>min:</span>
+                            <span id="d0tmin"></span>
+                        </div>
+                        <div>
+                            <span>max:</span>
+                            <span id="d0tmax"></span>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="wind">
+                        <div>windsnelheid:
+                            <span id="winds"></span>
+                        </div>
+                        <div>windrichting:
+                            <span id="windr"></span>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="zon">
+                        <div>zon op:
+                            <span id="sup"></span>
+                        </div>
+                        <div>zon onder:
+                            <span id="sunder"></span>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <img class="kaart" src="" alt="windkaart" id="windkracht-kaart">
+    <img class="kaart" src="" alt="tempkaart" id="temperatuur-kaart">
+
+</div>
+<script src="popup.js"></script>
+</body>
+</html>
