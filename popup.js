@@ -1,4 +1,3 @@
-const WEER_API = 'http://weerlive.nl/api/json-10min.php?locatie=zeldert';
 const kaart = {
     buien: 'https://cdn.knmi.nl/knmi/map/page/weer/actueel-weer/neerslagradar/WWWRADARBFT_loop.gif',
     wind: 'http://cdn.knmi.nl/knmi/map/page/weer/actueel-weer/windkracht.png',
@@ -52,15 +51,14 @@ function fillForm(data) {
 }
 
 function initForm() {
-    fetch(WEER_API)
-        .then(res => res.json())
-        .then((result) => {
-            fillForm(result.liveweer[0])
-            },
-            (error) => {
-                console.error(error)
-            }
-        )
+    chrome.runtime.sendMessage({request: 'fetchWeather'},
+        response => {
+            chrome.runtime.sendMessage({request: 'getWeather'},
+                response => {
+                    console.log(response.data);
+                    fillForm(response.data);
+                })
+        });
 }
 
 document.addEventListener('DOMContentLoaded',  () => {

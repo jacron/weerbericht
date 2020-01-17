@@ -4,7 +4,12 @@
   "version": "1.0",
   "author": "Jan H Croonen",
   "optional_permissions": [
+    "activeTab",
+    "<all_urls>"
   ],
+  "background": {
+    "scripts": ["background.js"]
+  },
   "browser_action": {
     "default_icon": "images/weerbericht16.png",
     "default_title": "Weerbericht",
