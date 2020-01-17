@@ -4,8 +4,6 @@
   "version": "1.0",
   "author": "Jan H Croonen",
   "optional_permissions": [
-    "activeTab",
-    "<all_urls>"
   ],
   "browser_action": {
     "default_icon": "images/weerbericht16.png",
