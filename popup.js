@@ -34,13 +34,13 @@ function getKaart(type) {
 
 function fillForm(data) {
     const bindings = [
-        ['plaats', 'plaats'],
+        // ['plaats', 'plaats'],
         ['verw', 'verw'],
         ['temp', 'temp'],
-        ['d0tmin', 'd0tmin'],
-        ['d0tmax', 'd0tmax'],
-        ['winds', 'winds'],
-        ['windr', 'windr'],
+        // ['d0tmin', 'd0tmin'],
+        // ['d0tmax', 'd0tmax'],
+        // ['winds', 'winds'],
+        // ['windr', 'windr'],
         ['sup', 'sup'],
         ['sunder', 'sunder'],
     ];
@@ -49,7 +49,7 @@ function fillForm(data) {
     }
     // document.getElementById('alarmtxt').innerText
     const funBindings = [
-        ['created', shortLocaleTime, null],
+        // ['created', shortLocaleTime, null],
         ['alarmtxt', getAlarm, data],
     ];
     for (const [id, fun, arg] of funBindings) {

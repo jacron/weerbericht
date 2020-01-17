@@ -1,8 +1,11 @@
+body {
+    margin: 0;
+}
 .weergegevens {
     width: 500px;
 }
 img.kaart {
-    /*width: 470px;*/
+    width: 550px;
 }
 .warning {
     color: orange;
@@ -19,7 +22,8 @@ img.kaart {
 }
 
 .zon {
-    color: #ff723b;
+    color: blue;
+    /*color: #ff723b;*/
 }
 
 .error {
@@ -31,23 +35,55 @@ img.kaart {
     padding: 4px 16px;
 }
 .created {
-    float: right;
+    /*float: right;*/
     padding-right: 8px;
 }
 .banner {
-    display: flex;
-    justify-content: space-between;
-    padding-right: 36px;
+    padding: 10px 45px 10px 10px;
+    position: absolute;
+    top: 86px;
+    width: 100px;
+    background-color: rgb(250, 250, 250);
+    left: 22px;
+    z-index: 1;
+}
+.verw {
+    white-space: pre-wrap;
+    width: 300px;
 }
 .weertabel {
     position: absolute;
-    top: 520px;
-    width: 400px;
-    background-color: rgba(200, 200, 200, .7);
-    right: 20px;
+    top: 526px;
+    background-color: rgb(250, 250, 250);
+    left: 18px;
+    padding-right: 60px;
+    z-index: 1;
 }
 #icon {
     position: absolute;
     top: 0;
     right: 12px;
+}
+.colophon {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: rgba(250, 250, 250, .8);
+    padding: 4px 10px;
+}
+.sea {
+    position: absolute;
+    top:80px;
+    left: 12px;
+    height: 342px;
+    width: 55px;
+    background-color: #defeff;
+}
+.land {
+    position: absolute;
+    top: 505px;
+    left: 18px;
+    width: 300px;
+    height: 82px;
+    background-color: #d0d1d1;
 }

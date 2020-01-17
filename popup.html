@@ -10,14 +10,12 @@
 <div class="content">
     <div class="weergegevens">
         <div class="banner">
-            <div id="created"></div>
-            <div id="plaats"></div>
             <div>
                 <span id="verw"></span>
                 <img src="" id="icon" alt="icon">
             </div>
+            <div class="warning" id="alarmtxt"></div>
         </div>
-        <div class="warning" id="alarmtxt"></div>
         <table class="weertabel">
             <tbody>
             <tr>
@@ -26,24 +24,6 @@
                         <div>
                             <span>temperatuur:</span>
                             <span id="temp"></span>
-                        </div>
-                        <div>
-                            <span>min:</span>
-                            <span id="d0tmin"></span>
-                        </div>
-                        <div>
-                            <span>max:</span>
-                            <span id="d0tmax"></span>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <div class="wind">
-                        <div>windsnelheid:
-                            <span id="winds"></span>
-                        </div>
-                        <div>windrichting:
-                            <span id="windr"></span>
                         </div>
                     </div>
                 </td>
@@ -63,8 +43,9 @@
     </div>
     <img class="kaart" src="" alt="windkaart" id="windkracht-kaart">
     <img class="kaart" src="" alt="tempkaart" id="temperatuur-kaart">
-
 </div>
+<div class="sea"></div>
+<div class="land"></div>
 <script src="popup.js"></script>
 </body>
 </html>
