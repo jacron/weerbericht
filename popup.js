@@ -50,15 +50,18 @@ function fillForm(data) {
     }
 }
 
+chrome.runtime.onMessage.addListener((req, sender, sendResponse) => {
+    if (req.result) {
+        // console.log(req.result);
+        fillForm(req.result);
+    } else {
+        sendResponse('no request handled');
+    }
+});
+
 function initForm() {
     chrome.runtime.sendMessage({request: 'fetchWeather'},
-        response => {
-            chrome.runtime.sendMessage({request: 'getWeather'},
-                response => {
-                    console.log(response.data);
-                    fillForm(response.data);
-                })
-        });
+        () => { });
 }
 
 document.addEventListener('DOMContentLoaded',  () => {

@@ -7,6 +7,8 @@ function fetchWeather() {
         .then(res => res.json())
         .then((result) => {
             weer = result.liveweer[0];
+            chrome.runtime.sendMessage({result: weer},
+                () => {});
             },
             (error) => {
                 console.error(error)
@@ -28,6 +30,6 @@ chrome.runtime.onMessage.addListener((req, sender, sendResponse) => {
                 break;
         }
     } else {
-        sendResponse('no request received');
+        sendResponse('no request handled');
     }
 });
