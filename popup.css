@@ -9,9 +9,21 @@ img.kaart {
 }
 .warning {
     color: orange;
-    max-width: 500px;
+    max-width: 400px;
     margin: 0 0 12px 12px;
     display: none;
+    position: absolute;
+    top: 160px;
+    left: 60px;
+    padding: 5px;
+    background-color: #defeff;
+    opacity: .9;
+}
+.closer {
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: default;
 }
 .temp {
     color: blue;

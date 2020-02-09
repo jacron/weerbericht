@@ -9,11 +9,12 @@ function getIcon(image) {
 }
 
 function getAlarm(data) {
+    const alarmText = document.querySelector('.warning');
     if (data.alarm === '1') {
-        document.getElementById('alarmtxt').style.display = 'block';
+        alarmText.style.display = 'block';
         return data.alarmtxt;
     } else {
-        document.getElementById('alarmtxt').style.display = 'none';
+        alarmText.style.display = 'none';
         return null;
     }
 }
@@ -34,7 +35,7 @@ function fillForm(data) {
     }
     const funBindings = [
         // ['created', shortLocaleTime, null],
-        ['alarmtxt', getAlarm, data],
+        ['alarm-text', getAlarm, data],
     ];
     for (const [id, fun, arg] of funBindings) {
         document.getElementById(id).innerText = fun(arg);
@@ -48,6 +49,10 @@ function fillForm(data) {
     for (const [id, fun, arg] of imgBindings) {
         document.getElementById(id).src = fun(arg);
     }
+    document.querySelector('.closer').addEventListener(
+        'click', () =>
+            document.querySelector('.warning').style.display = 'none'
+    )
 }
 
 chrome.runtime.onMessage.addListener((req, sender, sendResponse) => {
