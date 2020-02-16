@@ -2,7 +2,7 @@ body {
     margin: 0;
 }
 .weergegevens {
-    width: 500px;
+    /*width: 500px;*/
 }
 img.kaart {
     width: 550px;
@@ -44,10 +44,14 @@ img.kaart {
 }
 .weertabel td {
     vertical-align: top;
-    padding: 4px 16px;
+}
+.temp {
+    padding: 6px 24px 6px 10px;
+}
+.zon {
+    padding: 6px 0;
 }
 .created {
-    /*float: right;*/
     padding-right: 8px;
 }
 .banner {
@@ -66,9 +70,9 @@ img.kaart {
 .weertabel {
     position: absolute;
     top: 526px;
-    background-color: rgb(250, 250, 250);
+    /*background-color: rgb(250, 250, 250);*/
     left: 18px;
-    padding-right: 60px;
+    padding-right: 10px;
     z-index: 1;
 }
 #icon {

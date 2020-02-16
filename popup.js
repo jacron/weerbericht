@@ -24,11 +24,16 @@ function getKaart(type) {
 }
 
 function fillForm(data) {
+    console.log(data);
     const bindings = [
         ['verw', 'verw'],
         ['temp', 'temp'],
         ['sup', 'sup'],
         ['sunder', 'sunder'],
+        ['tmin', 'd0tmin'],
+        ['tmax', 'd0tmax'],
+        ['windk', 'd0windk'],
+        ['windr', 'windr'],
     ];
     for (const [id, field] of bindings) {
         document.getElementById(id).innerText = data[field];
