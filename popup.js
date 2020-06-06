@@ -24,7 +24,7 @@ function getKaart(type) {
 }
 
 function fillForm(data) {
-    console.log(data);
+    // console.log(data);
     const bindings = [
         ['verw', 'verw'],
         ['temp', 'temp'],
@@ -67,11 +67,15 @@ chrome.runtime.onMessage.addListener((req, sender, sendResponse) => {
     } else {
         sendResponse('no request handled');
     }
+    return true;
+    // return Promise.resolve("Dummy response to keep the console quiet");
 });
 
 function initForm() {
-    chrome.runtime.sendMessage({request: 'fetchWeather'},
-        () => { });
+    chrome.runtime.sendMessage(
+        {request: 'fetchWeather'},
+        () => {  }
+    );
 }
 
 document.addEventListener('DOMContentLoaded',  () => {

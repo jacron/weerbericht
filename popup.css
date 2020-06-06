@@ -35,7 +35,7 @@ img.kaart {
 
 .zon {
     color: blue;
-    /*color: #ff723b;*/
+    padding: 6px 0;
 }
 
 .error {
@@ -47,9 +47,6 @@ img.kaart {
 }
 .temp {
     padding: 6px 24px 6px 10px;
-}
-.zon {
-    padding: 6px 0;
 }
 .created {
     padding-right: 8px;
