@@ -7,6 +7,9 @@ body {
 img.kaart {
     width: 550px;
 }
+.content {
+    width: 550px;
+}
 .warning {
     color: orange;
     max-width: 400px;

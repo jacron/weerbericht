@@ -27,11 +27,7 @@ chrome.runtime.onMessage.addListener((req, sender, sendResponse) => {
         switch(req.request) {
             case 'fetchWeather':
                 fetchWeather(sendResponse);
-                // sendResponse({data: fetchWeather()});
                 break;
-            // case 'getWeather':
-            //     sendResponse({data: weer});
-            //     break;
             default:
                 sendResponse('invalid request:' + req.request);
                 break;
