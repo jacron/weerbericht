@@ -89,10 +89,10 @@ img.kaart {
 }
 .sea {
     position: absolute;
-    top:80px;
+    top:76px;
     left: 12px;
-    height: 342px;
-    width: 55px;
+    height: 350px;
+    width: 52px;
     background-color: #defeff;
 }
 .land {

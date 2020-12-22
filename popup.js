@@ -12,7 +12,7 @@ function getAlarm(data) {
     const alarmText = document.querySelector('.warning');
     if (data.alarm === '1') {
         alarmText.style.display = 'block';
-        return data.alarmtxt;
+        return data.alarmtxt.substr(0, 40) + '...';
     } else {
         alarmText.style.display = 'none';
         return null;
@@ -40,7 +40,7 @@ function fillForm(data) {
     }
     const funBindings = [
         // ['created', shortLocaleTime, null],
-        ['alarm-text', getAlarm, data],
+        // ['alarm-text', getAlarm, data],
     ];
     for (const [id, fun, arg] of funBindings) {
         document.getElementById(id).innerText = fun(arg);
