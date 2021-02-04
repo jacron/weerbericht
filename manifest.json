@@ -5,10 +5,12 @@
   "author": "Jan H Croonen",
   "optional_permissions": [
     "activeTab",
-    "<all_urls>"
+    "https://cdn.knmi.nl/*",
+    "http://weerlive.nl/api/"
   ],
   "background": {
-    "scripts": ["background.js"]
+    "scripts": ["background.js"],
+    "persistent": false
   },
   "browser_action": {
     "default_icon": "images/weerbericht16.png",

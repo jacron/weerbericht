@@ -4,19 +4,14 @@ const kaart = {
     temperatuur: 'http://cdn.knmi.nl/knmi/map/page/weer/actueel-weer/temperatuur.png',
 };
 
+const WEER_API = 'http://weerlive.nl/api/json-10min.php?key=d5fce13661&locatie=zeldert';
+const proxyUrl = '';  // https://cors-anywhere.herokuapp.com/';
+// const apiKey = 'd5fce13661';
+// https://stackoverflow.com/questions/43262121/trying-to-use-fetch-and-pass-in-mode-no-cors
+// nb kwestie speelt sinds chrome update naar 85.0.4164.3
+
 function getIcon(image) {
     return './icons/' + image + '.png';
-}
-
-function getAlarm(data) {
-    const alarmText = document.querySelector('.warning');
-    if (data.alarm === '1') {
-        alarmText.style.display = 'block';
-        return data.alarmtxt.substr(0, 40) + '...';
-    } else {
-        alarmText.style.display = 'none';
-        return null;
-    }
 }
 
 function getKaart(type) {
@@ -24,7 +19,6 @@ function getKaart(type) {
 }
 
 function fillForm(data) {
-    // console.log(data);
     const bindings = [
         ['verw', 'verw'],
         ['temp', 'temp'],
@@ -37,13 +31,6 @@ function fillForm(data) {
     ];
     for (const [id, field] of bindings) {
         document.getElementById(id).innerText = data[field];
-    }
-    const funBindings = [
-        // ['created', shortLocaleTime, null],
-        // ['alarm-text', getAlarm, data],
-    ];
-    for (const [id, fun, arg] of funBindings) {
-        document.getElementById(id).innerText = fun(arg);
     }
     const imgBindings = [
         ['icon', getIcon, data.image],
@@ -60,24 +47,18 @@ function fillForm(data) {
     )
 }
 
-chrome.runtime.onMessage.addListener((req, sender, sendResponse) => {
-    if (req.result) {
-        // console.log(req.result);
-        fillForm(req.result);
-    } else {
-        sendResponse('no request handled');
-    }
-    return true;
-    // return Promise.resolve("Dummy response to keep the console quiet");
-});
-
-function initForm() {
-    chrome.runtime.sendMessage(
-        {request: 'fetchWeather'},
-        () => {  }
-    );
+function fetchWeather() {
+    fetch(proxyUrl + WEER_API)
+        .then(res => res.json())
+        .then((result) => {
+                fillForm(result.liveweer[0]);
+            },
+            (error) => {
+                console.error(error)
+            }
+        );
 }
 
 document.addEventListener('DOMContentLoaded',  () => {
-    initForm();
+    fetchWeather();
 });
