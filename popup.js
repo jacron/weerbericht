@@ -4,7 +4,7 @@ const kaart = {
     temperatuur: 'http://cdn.knmi.nl/knmi/map/page/weer/actueel-weer/temperatuur.png',
 };
 
-const WEER_API = 'http://weerlive.nl/api/json-10min.php?key=d5fce13661&locatie=zeldert';
+const WEER_API = 'http://weerlive.nl/api/json-data-10min.php?key=d5fce13661&locatie=zeldert';
 const proxyUrl = '';  // https://cors-anywhere.herokuapp.com/';
 // const apiKey = 'd5fce13661';
 // https://stackoverflow.com/questions/43262121/trying-to-use-fetch-and-pass-in-mode-no-cors
