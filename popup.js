@@ -47,7 +47,16 @@ function fillForm(data) {
     )
 }
 
+function showKaarten() {
+    document.getElementById('wait').style.display = 'none';
+    const kaarten = document.getElementsByClassName('kaart');
+    for (let i = 0; i < kaarten.length; i++) {
+        kaarten[i].style.visibility = 'visible';
+    }
+}
+
 function fetchWeather() {
+    document.getElementById('windkracht-kaart').addEventListener('load', showKaarten);
     fetch(proxyUrl + WEER_API)
         .then(res => res.json())
         .then((result) => {

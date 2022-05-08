@@ -6,6 +6,7 @@ body {
 }
 img.kaart {
     width: 550px;
+    visibility: hidden;
 }
 .content {
     width: 550px;
