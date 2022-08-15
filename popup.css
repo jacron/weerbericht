@@ -50,7 +50,7 @@ img.kaart {
     vertical-align: top;
 }
 .temp {
-    padding: 6px 24px 6px 10px;
+    padding: 6px 46px 6px 10px;
 }
 .created {
     padding-right: 8px;
@@ -71,11 +71,12 @@ img.kaart {
 .weertabel {
     position: absolute;
     top: 504px;
-    font-size: large;
+    font-size: 15px;
     /*background-color: rgb(250, 250, 250);*/
     left: 18px;
     padding-right: 10px;
     z-index: 1;
+    line-height: 1.4;
 }
 #icon {
     position: absolute;
@@ -107,5 +108,5 @@ img.kaart {
 }
 div span:first-child {
     display: inline-block;
-    width: 62px;
+    width: 52px;
 }
