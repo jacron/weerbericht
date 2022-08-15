@@ -83,6 +83,18 @@ img.kaart {
     top: 0;
     right: 12px;
 }
+.pageDown {
+    position: absolute;
+    right: 30px;
+    cursor: pointer;
+    background-color: #defeff;
+}
+.pageDown#pD1 {
+    top: 550px;
+}
+.pageDown#pD2 {
+    top: 1150px;
+}
 .colophon {
     position: absolute;
     top: 20px;
@@ -106,7 +118,7 @@ img.kaart {
     height: 82px;
     background-color: #d0d1d1;
 }
-div span:first-child {
+.weertabel div span:first-child {
     display: inline-block;
     width: 52px;
 }
