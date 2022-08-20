@@ -68,16 +68,6 @@ img.kaart {
     white-space: pre-wrap;
     width: 300px;
 }
-.weertabel {
-    position: absolute;
-    top: 504px;
-    font-size: 15px;
-    /*background-color: rgb(250, 250, 250);*/
-    left: 18px;
-    padding-right: 10px;
-    z-index: 1;
-    line-height: 1.4;
-}
 #icon {
     position: absolute;
     top: 0;
@@ -116,13 +106,18 @@ img.kaart {
 }
 .land {
     position: absolute;
-    top: 505px;
+    top: 508px;
     left: 18px;
-    width: 300px;
-    height: 82px;
+    width: 290px;
+    height: 80px;
     background-color: #d0d1d1;
 }
-.weertabel div span:first-child {
-    display: inline-block;
-    width: 52px;
+.weertabel {
+    position: absolute;
+    top: 518px;
+    left: 32px;
+    font-size: 15px;
+    padding-right: 10px;
+    z-index: 1;
+    line-height: 1.4;
 }
