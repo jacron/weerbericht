@@ -1,8 +1,8 @@
 body {
     margin: 0;
 }
-.weergegevens {
-    /*width: 500px;*/
+#samenv {
+    margin-bottom: 3px;
 }
 img.kaart {
     width: 550px;
@@ -11,23 +11,27 @@ img.kaart {
 .content {
     width: 550px;
 }
-.warning {
+#alarmtxt {
+    padding: 6px;
+}
+.alarm {
     color: orange;
     max-width: 400px;
-    margin: 0 0 12px 12px;
     display: none;
     position: absolute;
     top: 160px;
-    left: 60px;
-    padding: 5px;
+    left: 20px;
+    padding: 12px;
     background-color: #defeff;
-    opacity: .9;
+    z-index: 1;
 }
 .closer {
     position: absolute;
     top: 0;
     right: 0;
-    cursor: default;
+    cursor: pointer;
+    border: #defeff solid 1px;
+    border-radius: 7px;
 }
 .temp {
     color: blue;
@@ -96,7 +100,7 @@ img.kaart {
     background-color: rgba(250, 250, 250, .8);
     padding: 4px 10px;
 }
-.sea {
+.hide-legenda {
     position: absolute;
     top:76px;
     left: 12px;
@@ -110,7 +114,7 @@ img.kaart {
     left: 18px;
     width: 290px;
     height: 80px;
-    background-color: #d0d1d1;
+    background-color: lightgoldenrodyellow;
 }
 .weertabel {
     position: absolute;
