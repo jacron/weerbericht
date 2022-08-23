@@ -21,7 +21,6 @@ function showIcon(src) {
 }
 
 function toggleAlarmtxt(alarmtxt) {
-    alarmtxt = 'testing alarm text'
     if (alarmtxt.length > 0) {
         const alarmBlock = document.querySelector('.alarm');
         alarmBlock.style.display = 'block';
