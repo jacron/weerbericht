@@ -1,32 +1,37 @@
 body {
     margin: 0;
 }
-.weergegevens {
-    /*width: 500px;*/
+#samenv {
+    margin-bottom: 3px;
 }
 img.kaart {
     width: 550px;
+    visibility: hidden;
 }
 .content {
     width: 550px;
 }
-.warning {
+#alarmtxt {
+    padding: 6px;
+}
+.alarm {
     color: orange;
     max-width: 400px;
-    margin: 0 0 12px 12px;
     display: none;
     position: absolute;
     top: 160px;
-    left: 60px;
-    padding: 5px;
+    left: 20px;
+    padding: 12px;
     background-color: #defeff;
-    opacity: .9;
+    z-index: 1;
 }
 .closer {
     position: absolute;
     top: 0;
     right: 0;
-    cursor: default;
+    cursor: pointer;
+    border: #defeff solid 1px;
+    border-radius: 7px;
 }
 .temp {
     color: blue;
@@ -49,7 +54,7 @@ img.kaart {
     vertical-align: top;
 }
 .temp {
-    padding: 6px 24px 6px 10px;
+    padding: 6px 46px 6px 10px;
 }
 .created {
     padding-right: 8px;
@@ -67,18 +72,26 @@ img.kaart {
     white-space: pre-wrap;
     width: 300px;
 }
-.weertabel {
-    position: absolute;
-    top: 526px;
-    background-color: rgb(250, 250, 250);
-    left: 18px;
-    padding-right: 10px;
-    z-index: 1;
-}
 #icon {
     position: absolute;
     top: 0;
     right: 12px;
+}
+.pageDown {
+    position: absolute;
+    right: 30px;
+    background-color: #defeff;
+    padding: 5px;
+    line-height: 1.2;
+}
+.pageDown#pD1 {
+    top: 550px;
+}
+.pageDown#pD2 {
+    top: 1150px;
+}
+.pageDown#pD3 {
+    top: 1710px;
 }
 .colophon {
     position: absolute;
@@ -87,7 +100,7 @@ img.kaart {
     background-color: rgba(250, 250, 250, .8);
     padding: 4px 10px;
 }
-.sea {
+.hide-legenda {
     position: absolute;
     top:76px;
     left: 12px;
@@ -97,9 +110,18 @@ img.kaart {
 }
 .land {
     position: absolute;
-    top: 505px;
+    top: 508px;
     left: 18px;
-    width: 300px;
-    height: 82px;
-    background-color: #d0d1d1;
+    width: 290px;
+    height: 80px;
+    background-color: lightgoldenrodyellow;
+}
+.weertabel {
+    position: absolute;
+    top: 518px;
+    left: 32px;
+    font-size: 15px;
+    padding-right: 10px;
+    z-index: 1;
+    line-height: 1.4;
 }

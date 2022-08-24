@@ -10,6 +10,7 @@
 <div class="content">
     <div class="weergegevens">
         <div class="banner">
+            <div id="samenv"></div>
             <div>
                 <span id="verw"></span>
                 <img src="" id="icon" alt="icon">
@@ -21,21 +22,22 @@
                 <td>
                     <div class="temp">
                         <div>
-                            <span>temperatuur:</span>
                             <span id="temp"></span>
+                            <span>&deg; C</span>
                         </div>
                         <div>
-                            <span>min/max:</span>
-                            <span id="tmin"></span> - <span id="tmax"></span>
+                            <span id="windr"></span>
+                            <span id="windk"></span>
                         </div>
                     </div>
                 </td>
                 <td>
                     <div class="zon">
                         <div>
-                            <span>wind:</span>
-                            <span id="windk"></span> -
-                            <span id="windr"></span>
+                            <span>min</span>
+                            <span id="tmin"></span>&deg;,
+                            <span>max</span>
+                            <span id="tmax"></span>&deg;
                         </div>
                         <div>
                             <span>zon:</span>
@@ -46,16 +48,32 @@
             </tr>
             </tbody>
         </table>
+        <div class="pageDown" id="pD1">
+            <a href="#temperatuur-kaart">temp</a>
+            <span> | </span>
+            <a href="#buien-kaart">buien</a>
+        </div>
+        <div class="pageDown" id="pD2">
+            <a href="#windkracht-kaart">wind</a>
+            <span> | </span>
+            <a href="#buien-kaart">buien</a>
+        </div>
+        <div class="pageDown" id="pD3">
+            <a href="#windkracht-kaart">wind</a>
+            <span> | </span>
+            <a href="#temperatuur-kaart">temp</a>
+        </div>
     </div>
-    <div class="warning">
-        <span id="alarm-text"></span>
+    <div class="alarm">
+        <span id="alarmtxt"></span>
         <div class="closer">X</div>
     </div>
+    <div id="wait">loading</div>
     <img class="kaart" src="" alt="windkaart" id="windkracht-kaart">
     <img class="kaart" src="" alt="tempkaart" id="temperatuur-kaart">
     <img class="kaart" src="" alt="buienkaart" id="buien-kaart">
 </div>
-<div class="sea"></div>
+<div class="hide-legenda"></div>
 <div class="land"></div>
 <script src="popup.js"></script>
 </body>
