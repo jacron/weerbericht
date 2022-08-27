@@ -15,6 +15,14 @@ const DATA_BINDINGS = [
     ['windr', 'windr'],
     ['samenv', 'samenv'],
 ];
+const MENU_BUIEN = 'menu_buien';
+const MENU_WIND = 'menu_wind';
+const MENU_TEMP = 'menu_temp';
+const kaart_buien = document.getElementById('buien-kaart');
+const kaart_wind = document.getElementById('windkracht-kaart');
+const kaart_temp = document.getElementById('temperatuur-kaart');
+const hide_legend = document.querySelector('.hide-legenda');
+const weertabel = document.querySelector('.weertabel');
 
 function showIcon(src) {
     document.getElementById('icon').src = './icons/' + src + '.png';
@@ -43,24 +51,67 @@ function bindImg() {
     }
 }
 
+function hide(element) {
+    element.style.display = 'none';
+}
+
+function show(element) {
+    element.style.display = 'block';
+}
+
+function hideKaarten() {
+    hide(kaart_buien);
+    hide(kaart_temp);
+    hide(kaart_wind);
+}
+
+function doMenu(e) {
+    console.log(e);
+    hideKaarten();
+    switch(e.target.getAttribute('id')) {
+        case MENU_WIND:
+            show(kaart_wind);
+            show(hide_legend);
+            show(weertabel);
+            break;
+        case MENU_TEMP:
+            show(kaart_temp);
+            show(hide_legend);
+            show(weertabel);
+            break;
+        case MENU_BUIEN:
+            show(kaart_buien);
+            hide(hide_legend);
+            hide(weertabel);
+            break;
+    }
+}
+
+function bindMenu() {
+    document.getElementById(MENU_BUIEN).addEventListener('click', doMenu);
+    document.getElementById(MENU_TEMP).addEventListener('click', doMenu);
+    document.getElementById(MENU_WIND).addEventListener('click', doMenu);
+}
+
 function fillForm(data) {
     toggleAlarmtxt(data.alarmtxt);
     bindData(data);
     showIcon(data.image);
 }
 
-function showKaarten() {
-    document.getElementById('wait').style.display = 'none';
-    const kaarten = document.getElementsByClassName('kaart');
-    for (let i = 0; i < kaarten.length; i++) {
-        kaarten[i].style.visibility = 'visible';
-    }
+function showWindKrachtKaart() {
+    kaart_wind
+        .addEventListener('load', (e) => {
+            document.getElementById('wait').style.display = 'none';
+            show(e.path[0]);
+        });
+
 }
 
 function fetchWeather() {
     bindImg();
-    document.getElementById('windkracht-kaart')
-        .addEventListener('load', showKaarten);
+    bindMenu();
+    showWindKrachtKaart();
     fetch(WEER_API)
         .then(res => res.json())
         .then((result) => {

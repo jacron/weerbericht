@@ -6,7 +6,7 @@ body {
 }
 img.kaart {
     width: 550px;
-    visibility: hidden;
+    display: none;
 }
 .content {
     width: 550px;
@@ -35,26 +35,22 @@ img.kaart {
 }
 .temp {
     color: blue;
+    padding: 6px 46px 6px 10px;
+    font-weight: bold;
 }
-
 .wind {
     color: darkgreen;
 }
-
 .zon {
     color: blue;
     padding: 6px 0;
 }
-
 .error {
     color: red;
     padding: 8px;
 }
 .weertabel td {
     vertical-align: top;
-}
-.temp {
-    padding: 6px 46px 6px 10px;
 }
 .created {
     padding-right: 8px;
@@ -77,22 +73,22 @@ img.kaart {
     top: 0;
     right: 12px;
 }
-.pageDown {
+.menu {
     position: absolute;
     right: 30px;
     background-color: #defeff;
     padding: 5px;
     line-height: 1.2;
 }
-.pageDown#pD1 {
-    top: 550px;
+.menu a {
+    cursor: pointer;
 }
-.pageDown#pD2 {
-    top: 1150px;
+.menu a:hover {
+    text-decoration: underline;
 }
-.pageDown#pD3 {
-    top: 1710px;
-}
+/*.pageDown#pD1 {*/
+/*    top: 550px;*/
+/*}*/
 .colophon {
     position: absolute;
     top: 20px;
@@ -118,10 +114,14 @@ img.kaart {
 }
 .weertabel {
     position: absolute;
-    top: 518px;
-    left: 32px;
+    top: 508px;
+    left: 18px;
+    width: 290px;
+    height: 80px;
     font-size: 15px;
+    padding-top: 10px;
     padding-right: 10px;
     z-index: 1;
     line-height: 1.4;
+    background-color: lightgoldenrodyellow;
 }
