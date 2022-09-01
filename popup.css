@@ -8,7 +8,7 @@ body {
     margin-bottom: 4px;
 }
 #verw {
-    width: 150px;
+    width: 156px;
 }
 img.kaart {
     width: 550px;
@@ -66,7 +66,7 @@ img.kaart {
     position: absolute;
     top: 86px;
     background-color: rgb(250, 250, 250);
-    left: 18px;
+    left: 12px;
     z-index: 1;
 }
 .verw {
@@ -105,15 +105,7 @@ img.kaart {
     left: 12px;
     height: 350px;
     width: 52px;
-    background-color: #defeff;
-}
-.land {
-    position: absolute;
-    top: 508px;
-    left: 18px;
-    width: 290px;
-    height: 80px;
-    background-color: lightgoldenrodyellow;
+    background-color: #dbfefe;
 }
 .weertabel {
     position: absolute;
@@ -126,5 +118,5 @@ img.kaart {
     padding-right: 10px;
     z-index: 1;
     line-height: 1.4;
-    background-color: lightgoldenrodyellow;
+    background-color: #dadada;
 }
