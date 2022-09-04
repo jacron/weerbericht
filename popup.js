@@ -1,7 +1,10 @@
-const WEER_API = 'http://weerlive.nl/api/json-data-10min.php?key=d5fce13661&locatie=zeldert';
+const locatie = 'zeldert';
+const apikey = 'd5fce13661';
+const endpoint = 'json-data-10min.php'
+const WEER_LIVE_API = `https://weerlive.nl/api/${endpoint}?key=${apikey}&locatie=${locatie}`;
 const IMG_BINDINGS = [
-    ['windkracht-kaart', 'http://cdn.knmi.nl/knmi/map/page/weer/actueel-weer/windkracht.png'],
-    ['temperatuur-kaart', 'http://cdn.knmi.nl/knmi/map/page/weer/actueel-weer/temperatuur.png'],
+    ['windkracht-kaart', 'https://cdn.knmi.nl/knmi/map/page/weer/actueel-weer/windkracht.png'],
+    ['temperatuur-kaart', 'https://cdn.knmi.nl/knmi/map/page/weer/actueel-weer/temperatuur.png'],
     ['buien-kaart', 'https://cdn.knmi.nl/knmi/map/page/weer/actueel-weer/neerslagradar/WWWRADARBFT_loop.gif'],
 ];
 const DATA_BINDINGS = [
@@ -39,10 +42,15 @@ function toggleAlarmtxt(alarmtxt) {
     }
 }
 
+/**
+ *
+ * @param data {{plaats}}
+ */
 function bindData(data) {
     for (const [id, field] of DATA_BINDINGS) {
         document.getElementById(id).innerText = data[field];
     }
+    weertabel.setAttribute('title', data.plaats);
 }
 
 function bindImg() {
@@ -93,6 +101,10 @@ function bindMenu() {
     document.getElementById(MENU_WIND).addEventListener('click', doMenu);
 }
 
+/**
+ *
+ * @param data {{alarmtxt, image}}
+ */
 function fillForm(data) {
     toggleAlarmtxt(data.alarmtxt);
     bindData(data);
@@ -108,19 +120,26 @@ function showWindKrachtKaart() {
 
 }
 
+/**
+ *
+ * @param result {{liveweer:[]}}
+ */
+function getLiveweer(result) {
+    // console.log(result);
+    fillForm(result.liveweer[0]);
+}
+
+function onError(error) {
+    console.error(error);
+}
+
 function fetchWeather() {
     bindImg();
     bindMenu();
     showWindKrachtKaart();
-    fetch(WEER_API)
+    fetch(WEER_LIVE_API)
         .then(res => res.json())
-        .then((result) => {
-                fillForm(result.liveweer[0]);
-            },
-            (error) => {
-                console.error(error)
-            }
-        );
+        .then(getLiveweer, onError);
 }
 
 document.addEventListener('DOMContentLoaded',  () => {
