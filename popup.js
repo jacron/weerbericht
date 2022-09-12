@@ -1,6 +1,7 @@
+// http://weerlive.nl/
 const locatie = 'zeldert';
 const apikey = 'd5fce13661';
-const endpoint = 'json-data-10min.php'
+const endpoint = 'json-data-10min.php';
 const WEER_LIVE_API = `https://weerlive.nl/api/${endpoint}?key=${apikey}&locatie=${locatie}`;
 const IMG_BINDINGS = [
     ['windkracht-kaart', 'https://cdn.knmi.nl/knmi/map/page/weer/actueel-weer/windkracht.png'],
@@ -17,6 +18,7 @@ const DATA_BINDINGS = [
     ['windk', 'd0windk'],
     ['windr', 'windr'],
     ['samenv', 'samenv'],
+    ['plaats', 'plaats']
 ];
 const MENU_BUIEN = 'menu_buien';
 const MENU_WIND = 'menu_wind';
@@ -50,7 +52,6 @@ function bindData(data) {
     for (const [id, field] of DATA_BINDINGS) {
         document.getElementById(id).innerText = data[field];
     }
-    weertabel.setAttribute('title', data.plaats);
 }
 
 function bindImg() {

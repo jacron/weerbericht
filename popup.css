@@ -4,6 +4,9 @@ body {
 #samenv {
     font-weight: bold;
 }
+#plaats {
+    font-style: italic;
+}
 .verwachting {
     margin-bottom: 4px;
 }
@@ -41,7 +44,6 @@ img.kaart {
 }
 .temp {
     color: blue;
-    padding: 6px 10px;
     font-weight: bold;
 }
 .wind {
@@ -49,7 +51,6 @@ img.kaart {
 }
 .zon {
     color: blue;
-    padding: 6px 0;
 }
 .error {
     color: red;
@@ -114,8 +115,6 @@ img.kaart {
     width: 290px;
     height: 80px;
     font-size: 15px;
-    padding-top: 10px;
-    padding-right: 10px;
     z-index: 1;
     line-height: 1.4;
     background-color: #dadada;
