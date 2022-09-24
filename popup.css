@@ -1,3 +1,4 @@
+/* Digital Colour Meter (hide-legenda): use Display in Generic RGB */
 body {
     margin: 0;
 }
@@ -106,7 +107,7 @@ img.kaart {
     left: 12px;
     height: 350px;
     width: 52px;
-    background-color: #dbfefe;
+    background-color: #d4fffd;
 }
 .weertabel {
     position: absolute;
