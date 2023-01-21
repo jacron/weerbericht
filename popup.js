@@ -116,7 +116,7 @@ function showWindKrachtKaart() {
     kaart_wind
         .addEventListener('load', (e) => {
             document.getElementById('wait').style.display = 'none';
-            show(e.path[0]);
+            show(document.getElementById('windkracht-kaart'));
         });
 
 }
