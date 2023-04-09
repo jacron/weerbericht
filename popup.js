@@ -1,4 +1,5 @@
 // http://weerlive.nl/
+const WEERBERICHT_TIMEOUT = 5 * 60000;
 const locatie = 'zeldert';
 const apikey = 'd5fce13661';
 const endpoint = 'json-data-10min.php';
@@ -23,6 +24,7 @@ const DATA_BINDINGS = [
 const MENU_BUIEN = 'menu_buien';
 const MENU_WIND = 'menu_wind';
 const MENU_TEMP = 'menu_temp';
+const DIV_TIJD = 'div_tijd';
 const kaart_buien = document.getElementById('buien-kaart');
 const kaart_wind = document.getElementById('windkracht-kaart');
 const kaart_temp = document.getElementById('temperatuur-kaart');
@@ -102,6 +104,23 @@ function bindMenu() {
     document.getElementById(MENU_WIND).addEventListener('click', doMenu);
 }
 
+function fillZero(n) {
+    if (n< 10) {
+        return '0' + n;
+    } else {
+        return n;
+    }
+}
+
+function getTime() {
+    const today = new Date();
+    return today.getHours() + ":" + fillZero(today.getMinutes()) + " u.";
+}
+
+function showTime() {
+    document.getElementById(DIV_TIJD).innerText = getTime();
+}
+
 /**
  *
  * @param data {{alarmtxt, image}}
@@ -110,6 +129,7 @@ function fillForm(data) {
     toggleAlarmtxt(data.alarmtxt);
     bindData(data);
     showIcon(data.image);
+    showTime();
 }
 
 function showWindKrachtKaart() {
@@ -117,7 +137,7 @@ function showWindKrachtKaart() {
         .addEventListener('load', (e) => {
             if (e.path) {
                 document.getElementById('wait').style.display = 'none';
-                show(e.path[0]);
+                show(document.getElementById('windkracht-kaart'));
             } else {
                 console.log(e);
                 document.getElementById('wait').style.display = 'none';
@@ -152,3 +172,5 @@ function fetchWeather() {
 document.addEventListener('DOMContentLoaded',  () => {
     fetchWeather();
 });
+
+setInterval(() => window.location.reload(), WEERBERICHT_TIMEOUT);
