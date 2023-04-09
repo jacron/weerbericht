@@ -115,8 +115,14 @@ function fillForm(data) {
 function showWindKrachtKaart() {
     kaart_wind
         .addEventListener('load', (e) => {
-            document.getElementById('wait').style.display = 'none';
-            show(e.path[0]);
+            if (e.path) {
+                document.getElementById('wait').style.display = 'none';
+                show(e.path[0]);
+            } else {
+                console.log(e);
+                document.getElementById('wait').style.display = 'none';
+                show(document.getElementById('windkracht-kaart'));
+            }
         });
 
 }
