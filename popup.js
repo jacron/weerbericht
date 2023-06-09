@@ -24,12 +24,15 @@ const DATA_BINDINGS = [
 const MENU_BUIEN = 'menu_buien';
 const MENU_WIND = 'menu_wind';
 const MENU_TEMP = 'menu_temp';
+
 const DIV_TIJD = 'div_tijd';
 const kaart_buien = document.getElementById('buien-kaart');
 const kaart_wind = document.getElementById('windkracht-kaart');
 const kaart_temp = document.getElementById('temperatuur-kaart');
 const hide_legend = document.querySelector('.hide-legenda');
 const weertabel = document.querySelector('.weertabel');
+
+let actueleOptie = MENU_WIND;
 
 function showIcon(src) {
     document.getElementById('icon').src = './icons/' + src + '.png';
@@ -62,6 +65,49 @@ function bindImg() {
     }
 }
 
+function isVisible(element) {
+    return element.style.display === 'block';
+}
+
+function nextMenuOption() {
+    /* temp > buien > wind */
+    if (actueleOptie === MENU_WIND) {
+        return MENU_TEMP;
+    } else if (actueleOptie === MENU_TEMP) {
+        return MENU_BUIEN;
+    } else if (actueleOptie === MENU_BUIEN) {
+        return MENU_WIND;
+    }
+}
+
+function prevMenuOption() {
+    /* temp > buien > wind */
+    if (actueleOptie === MENU_WIND) {
+        return MENU_BUIEN;
+    } else if (actueleOptie === MENU_BUIEN) {
+        return MENU_TEMP;
+    } else if (actueleOptie === MENU_TEMP) {
+        return MENU_WIND;
+    }
+}
+
+function onKeydown(e) {
+    switch (e.key) {
+        case 'ArrowRight':
+            actueleOptie = nextMenuOption();
+            showMenu(actueleOptie);
+            break;
+        case 'ArrowLeft':
+            actueleOptie = prevMenuOption();
+            showMenu(actueleOptie);
+            break;
+    }
+}
+
+function bindKeys() {
+    document.body.addEventListener('keydown', onKeydown);
+}
+
 function hide(element) {
     element.style.display = 'none';
 }
@@ -76,19 +122,16 @@ function hideKaarten() {
     hide(kaart_wind);
 }
 
-function doMenu(e) {
-    console.log(e);
+function showMenu(id) {
+    show(hide_legend);
+    show(weertabel);
     hideKaarten();
-    switch(e.target.getAttribute('id')) {
+    switch(id) {
         case MENU_WIND:
             show(kaart_wind);
-            show(hide_legend);
-            show(weertabel);
             break;
         case MENU_TEMP:
             show(kaart_temp);
-            show(hide_legend);
-            show(weertabel);
             break;
         case MENU_BUIEN:
             show(kaart_buien);
@@ -96,6 +139,11 @@ function doMenu(e) {
             hide(weertabel);
             break;
     }
+}
+
+function doMenu(e) {
+    hideKaarten();
+    showMenu(e.target.getAttribute('id'));
 }
 
 function bindMenu() {
@@ -135,14 +183,8 @@ function fillForm(data) {
 function showWindKrachtKaart() {
     kaart_wind
         .addEventListener('load', (e) => {
-            if (e.path) {
-                document.getElementById('wait').style.display = 'none';
-                show(document.getElementById('windkracht-kaart'));
-            } else {
-                console.log(e);
-                document.getElementById('wait').style.display = 'none';
-                show(document.getElementById('windkracht-kaart'));
-            }
+            document.getElementById('wait').style.display = 'none';
+            show(document.getElementById('windkracht-kaart'));
         });
 
 }
@@ -152,7 +194,6 @@ function showWindKrachtKaart() {
  * @param result {{liveweer:[]}}
  */
 function getLiveweer(result) {
-    // console.log(result);
     fillForm(result.liveweer[0]);
 }
 
@@ -163,6 +204,7 @@ function onError(error) {
 function fetchWeather() {
     bindImg();
     bindMenu();
+    bindKeys();
     showWindKrachtKaart();
     fetch(WEER_LIVE_API)
         .then(res => res.json())
