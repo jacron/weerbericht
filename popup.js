@@ -122,10 +122,24 @@ function hideKaarten() {
     hide(kaart_wind);
 }
 
+function deselectMenuOpties() {
+    document.getElementById(MENU_TEMP).classList.remove('active');
+    document.getElementById(MENU_BUIEN).classList.remove('active');
+    document.getElementById(MENU_WIND).classList.remove('active');
+}
+
+function selectMenOption(id) {
+    document.getElementById(id).classList.add('active');
+}
+
 function showMenu(id) {
+    hideKaarten();
     show(hide_legend);
     show(weertabel);
-    hideKaarten();
+
+    deselectMenuOpties();
+    selectMenOption(id);
+
     switch(id) {
         case MENU_WIND:
             show(kaart_wind);
@@ -142,8 +156,8 @@ function showMenu(id) {
 }
 
 function doMenu(e) {
-    hideKaarten();
-    showMenu(e.target.getAttribute('id'));
+    actueleOptie = e.target.getAttribute('id');
+    showMenu(actueleOptie);
 }
 
 function bindMenu() {

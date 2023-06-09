@@ -120,9 +120,7 @@ img.kaart {
     line-height: 1.4;
     background-color: #dbdbdb;
 }
- /*light version: hide some elements */
-/*.menu,*/
-/*#temperatuur-kaart,*/
-/*#buien-kaart {*/
-/*    display: none;*/
-/*}*/
+.active {
+    font-weight: bold;
+    background-color: #fffeff;
+}
