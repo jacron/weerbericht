@@ -1,9 +1,9 @@
 // http://weerlive.nl/
 const WEERBERICHT_TIMEOUT = 5 * 60000;
-const locatie = 'zeldert';
+// const locatie = 'zeldert';
 const apikey = 'd5fce13661';
 const endpoint = 'json-data-10min.php';
-const WEER_LIVE_API = `https://weerlive.nl/api/${endpoint}?key=${apikey}&locatie=${locatie}`;
+const WEER_LIVE_API = `https://weerlive.nl/api/${endpoint}?key=${apikey}&locatie=`;  // ${locatie}`;
 const IMG_BINDINGS = [
     ['windkracht-kaart', 'https://cdn.knmi.nl/knmi/map/page/weer/actueel-weer/windkracht.png'],
     ['temperatuur-kaart', 'https://cdn.knmi.nl/knmi/map/page/weer/actueel-weer/temperatuur.png'],
@@ -200,7 +200,6 @@ function showWindKrachtKaart() {
             document.getElementById('wait').style.display = 'none';
             show(document.getElementById('windkracht-kaart'));
         });
-
 }
 
 /**
@@ -215,18 +214,33 @@ function onError(error) {
     console.error(error);
 }
 
-function fetchWeather() {
+function fetchWeather(locatie) {
     bindImg();
     bindMenu();
     bindKeys();
     showWindKrachtKaart();
-    fetch(WEER_LIVE_API)
+    fetch(`${WEER_LIVE_API}${locatie}`)
         .then(res => res.json())
         .then(getLiveweer, onError);
 }
 
+function fetchFromLocation() {
+    navigator.geolocation.getCurrentPosition(
+        (loc) => {
+            const { coords } = loc;
+            let { latitude, longitude } = coords;
+            fetchWeather(`${latitude},${longitude}`);
+        },
+        (err) => {
+            console.error(err);
+        }
+    );
+}
+
 document.addEventListener('DOMContentLoaded',  () => {
-    fetchWeather();
+    fetchWeather(`Hoogland`);
+    // fetchFromLocation();
 });
 
-setInterval(() => window.location.reload(), WEERBERICHT_TIMEOUT);
+// setInterval(() => window.location.reload(), WEERBERICHT_TIMEOUT);
+
