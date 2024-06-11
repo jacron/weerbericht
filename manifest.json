@@ -4,7 +4,6 @@
   "version": "1.1",
   "author": "Jan H Croonen",
   "permissions": [
-    "activeTab",
     "geolocation"
   ],
   "host_permissions": [
