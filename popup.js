@@ -52,7 +52,7 @@ function toggleAlarmtxt(liveweer) {
     }
 }
 
-function bindLiveweer(data, bindings) {
+function bind(data, bindings) {
     for (const [id, field] of bindings) {
         document.getElementById(id).innerText = data[field];
     }
@@ -178,10 +178,12 @@ function showTime() {
     document.getElementById(DIV_TIJD).innerText = getTime();
 }
 
-function fillForm(liveweer, verwachting) {
+function fillForm(result) {
+    const liveweer = result.liveweer[0];
+    const verwachtingVandaag = result.wk_verw[0];
+    bind(verwachtingVandaag, VERWACHTING_DATA_BINDINGS);
+    bind(liveweer, LIVEWEER_DATA_BINDINGS);
     toggleAlarmtxt(liveweer);
-    bindLiveweer(liveweer, LIVEWEER_DATA_BINDINGS);
-    bindLiveweer(verwachting, VERWACHTING_DATA_BINDINGS);
     showIcon(liveweer.image);
     showTime();
 }
@@ -196,7 +198,7 @@ function showWindKrachtKaart() {
 
 function getLiveweer(result) {
     console.log(result);
-    fillForm(result.liveweer[0], result.wk_verw[0]);
+    fillForm(result);
 }
 
 function onError(error) {
