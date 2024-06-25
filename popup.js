@@ -2,25 +2,28 @@
 const WEERBERICHT_TIMEOUT = 5 * 60000;
 // const locatie = 'zeldert';
 const apikey = 'd5fce13661';
-const endpoint = 'json-data-10min.php';
+const endpoint = 'weerlive_api_v2.php';
 const WEER_LIVE_API = `https://weerlive.nl/api/${endpoint}?key=${apikey}&locatie=`;  // ${locatie}`;
 const IMG_BINDINGS = [
     ['windkracht-kaart', 'https://cdn.knmi.nl/knmi/map/page/weer/actueel-weer/windkracht.png'],
     ['temperatuur-kaart', 'https://cdn.knmi.nl/knmi/map/page/weer/actueel-weer/temperatuur.png'],
     ['buien-kaart', 'https://cdn.knmi.nl/knmi/map/page/weer/actueel-weer/neerslagradar/WWWRADARBFT_loop.gif'],
 ];
-const DATA_BINDINGS = [
+const LIVEWEER_DATA_BINDINGS = [
     ['verw', 'verw'],
     ['temp', 'temp'],
     ['sup', 'sup'],
     ['sunder', 'sunder'],
-    ['tmin', 'd0tmin'],
-    ['tmax', 'd0tmax'],
-    ['windk', 'd0windk'],
-    ['windr', 'windr'],
     ['samenv', 'samenv'],
     ['plaats', 'plaats']
 ];
+const VERWACHTING_DATA_BINDINGS = [
+    ['windk', 'windbft'],
+    ['windr', 'windr'],
+    ['tmin', 'min_temp'],
+    ['tmax', 'max_temp'],
+];
+
 const MENU_BUIEN = 'menu_buien';
 const MENU_WIND = 'menu_wind';
 const MENU_TEMP = 'menu_temp';
@@ -39,7 +42,7 @@ function showIcon(src) {
 }
 
 function toggleAlarmtxt(alarmtxt) {
-    if (alarmtxt.length > 0) {
+    if (alarmtxt && alarmtxt.length > 0) {
         const alarmBlock = document.querySelector('.alarm');
         alarmBlock.style.display = 'block';
         document.getElementById('alarmtxt').innerText = alarmtxt;
@@ -49,12 +52,8 @@ function toggleAlarmtxt(alarmtxt) {
     }
 }
 
-/**
- *
- * @param data {{plaats}}
- */
-function bindData(data) {
-    for (const [id, field] of DATA_BINDINGS) {
+function bindLiveweer(data, bindings) {
+    for (const [id, field] of bindings) {
         document.getElementById(id).innerText = data[field];
     }
 }
@@ -63,10 +62,6 @@ function bindImg() {
     for (const [id, url] of IMG_BINDINGS) {
         document.getElementById(id).src = url;
     }
-}
-
-function isVisible(element) {
-    return element.style.display === 'block';
 }
 
 function nextMenuOption() {
@@ -183,14 +178,11 @@ function showTime() {
     document.getElementById(DIV_TIJD).innerText = getTime();
 }
 
-/**
- *
- * @param data {{alarmtxt, image}}
- */
-function fillForm(data) {
-    toggleAlarmtxt(data.alarmtxt);
-    bindData(data);
-    showIcon(data.image);
+function fillForm(liveweer, verwachting) {
+    toggleAlarmtxt(liveweer.alarm);
+    bindLiveweer(liveweer, LIVEWEER_DATA_BINDINGS);
+    bindLiveweer(verwachting, VERWACHTING_DATA_BINDINGS);
+    showIcon(liveweer.image);
     showTime();
 }
 
@@ -202,12 +194,9 @@ function showWindKrachtKaart() {
         });
 }
 
-/**
- *
- * @param result {{liveweer:[]}}
- */
 function getLiveweer(result) {
-    fillForm(result.liveweer[0]);
+    console.log(result);
+    fillForm(result.liveweer[0], result.wk_verw[0]);
 }
 
 function onError(error) {
