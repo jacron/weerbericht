@@ -1,5 +1,4 @@
 // http://weerlive.nl/
-const WEERBERICHT_TIMEOUT = 5 * 60000;
 // const locatie = 'zeldert';
 const apikey = 'd5fce13661';
 const endpoint = 'weerlive_api_v2.php';
@@ -14,7 +13,7 @@ const LIVEWEER_DATA_BINDINGS = [
     ['temp', 'temp'],
     ['sup', 'sup'],
     ['sunder', 'sunder'],
-    ['samenv', 'samenv'],
+    ['samenvatting', 'samenv'],
     ['plaats', 'plaats']
 ];
 const VERWACHTING_DATA_BINDINGS = [
@@ -190,15 +189,119 @@ function fillForm(result) {
 
 function showWindKrachtKaart() {
     kaart_wind
-        .addEventListener('load', (e) => {
+        .addEventListener('load', () => {
             document.getElementById('wait').style.display = 'none';
             show(document.getElementById('windkracht-kaart'));
         });
 }
 
+function tweedeWoord(s) {
+    const w = s.split(' ');
+    return w[1];
+}
+
+function dag(s) {
+    const w = s.split('-');
+    return w[0];
+}
+
+function makeTableCell(content) {
+    const td = document.createElement('td');
+    td.textContent = content;
+    return td;
+}
+
+function makeTableCellR(content) {
+    const td = makeTableCell(content);
+    td.classList.add('numeric');
+    return td;
+}
+
+function populateRowVandaag(tr, u) {
+    tr.appendChild(makeTableCell(tweedeWoord(u.uur)));
+    tr.appendChild(makeTableCell(u.image));
+    tr.appendChild(makeTableCellR(u.temp));
+    tr.appendChild(makeTableCell(u.windr));
+    tr.appendChild(makeTableCell(u.windbft));
+    tr.appendChild(makeTableCellR(u.neersl));
+}
+
+function populateRowWeek(tr, w) {
+    tr.appendChild(makeTableCell(dag(w.dag)));
+    tr.appendChild(makeTableCell(w.image));
+    tr.appendChild(makeTableCellR(w.max_temp));
+    tr.appendChild(makeTableCellR(w.min_temp));
+    tr.appendChild(makeTableCell(w.windr));
+    tr.appendChild(makeTableCell(w.windbft));
+    tr.appendChild(makeTableCellR(w.zond_perc_dag));
+    tr.appendChild(makeTableCellR(w.neersl_perc_dag));
+}
+
+function makeHeaderCell(content) {
+    const th = document.createElement('th');
+    th.textContent = content;
+    return th;
+}
+
+function headerRowWeek() {
+    const tr = document.createElement('tr');
+    tr.appendChild(makeHeaderCell(''));
+    tr.appendChild(makeHeaderCell(''));
+    tr.appendChild(makeHeaderCell('max'));
+    tr.appendChild(makeHeaderCell('min'));
+    tr.appendChild(makeHeaderCell(''));
+    tr.appendChild(makeHeaderCell(''));
+    tr.appendChild(makeHeaderCell('zon'));
+    tr.appendChild(makeHeaderCell('regen'));
+    return tr;
+}
+
+function fillWeek(result) {
+    const week_verwachtingen = result.wk_verw; // 5 items
+    const tabel = document.getElementById("week_tabel");
+    tabel.appendChild(headerRowWeek());
+    for (let i = 0; i < 5; i++) {
+        const tr = document.createElement('tr');
+        populateRowWeek(tr, week_verwachtingen[i]);
+        tabel.appendChild(tr);
+    }
+}
+
+function fillVerwachtingen(result) {
+    const uur_verwachtingen = result.uur_verw;  // 24 items
+    const tabel = document.getElementById("verw_tabel");
+    for (let i = 0; i < 10; i++) {
+        const tr = document.createElement('tr');
+        populateRowVandaag(tr, uur_verwachtingen[i]);
+        tabel.appendChild(tr);
+    }
+}
+
+function toggleDagVerwachtingen(result) {
+    const verwachtingen = document.querySelector('.verwachtingen');
+    if (verwachtingen.querySelector('tr') === null) {
+        fillVerwachtingen(result);
+    }
+    const display = verwachtingen.style.display;
+    verwachtingen.style.display = display === 'block' ? 'none' : 'block';
+}
+
+function toggleWeekVerwachtingen(result) {
+    const verwachtingen = document.querySelector('.week');
+    if (verwachtingen.querySelector('tr') === null) {
+        fillWeek(result);
+    }
+    const display = verwachtingen.style.display;
+    verwachtingen.style.display = display === 'block' ? 'none' : 'block';
+}
+
 function getLiveweer(result) {
     console.log(result);
     fillForm(result);
+    const btnToggleDag = document.getElementById('toggleDag');
+    const btnToggleWeek = document.getElementById('toggleWeek');
+    btnToggleDag.addEventListener('click', () => toggleDagVerwachtingen(result));
+    btnToggleWeek.addEventListener('click', () => toggleWeekVerwachtingen(result))
 }
 
 function onError(error) {
