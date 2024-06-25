@@ -41,11 +41,11 @@ function showIcon(src) {
     document.getElementById('icon').src = './icons/' + src + '.png';
 }
 
-function toggleAlarmtxt(alarmtxt) {
-    if (alarmtxt && alarmtxt.length > 0) {
-        const alarmBlock = document.querySelector('.alarm');
-        alarmBlock.style.display = 'block';
-        document.getElementById('alarmtxt').innerText = alarmtxt;
+function toggleAlarmtxt(liveweer) {
+    if (liveweer.alarm === '1') {
+        document.querySelector('.alarm').style.display = 'block';
+        document.getElementById('alarmheader').innerText = liveweer.lkop;
+        document.getElementById('alarmtxt').innerText = liveweer.ltekst;
         document.querySelector('.closer').addEventListener(
             'click', () => alarmBlock.style.display = 'none'
         )
@@ -179,7 +179,7 @@ function showTime() {
 }
 
 function fillForm(liveweer, verwachting) {
-    toggleAlarmtxt(liveweer.alarm);
+    toggleAlarmtxt(liveweer);
     bindLiveweer(liveweer, LIVEWEER_DATA_BINDINGS);
     bindLiveweer(verwachting, VERWACHTING_DATA_BINDINGS);
     showIcon(liveweer.image);
