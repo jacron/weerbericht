@@ -41,7 +41,7 @@ img.kaart {
 .verwachtingen {
     position: absolute;
     top: 340px;
-    left: 320px;
+    right: 20px;
     background-color: #defeff;
     z-index: 1;
     display: none;
@@ -49,8 +49,8 @@ img.kaart {
 }
 .week {
     position: absolute;
-    top: 180px;
-    left: 20px;
+    top: 60px;
+    right: 20px;
     background-color: #defeff;
     z-index: 1;
     display: none;
@@ -58,8 +58,9 @@ img.kaart {
 }
 .controls {
     position: absolute;
-    left: 450px;
-    bottom: 10px
+    left: 400px;
+    bottom: 10px;
+    display: flex;
 }
 .closer {
     position: absolute;

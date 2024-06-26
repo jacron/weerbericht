@@ -217,24 +217,32 @@ function makeTableCellR(content) {
     return td;
 }
 
+const vandaagHeaders = [
+    '', '', 'wind', '', 'neerslag', ''
+];
+
 function populateRowVandaag(tr, u) {
     tr.appendChild(makeTableCell(tweedeWoord(u.uur)));
-    tr.appendChild(makeTableCell(u.image));
     tr.appendChild(makeTableCellR(u.temp));
     tr.appendChild(makeTableCell(u.windr));
     tr.appendChild(makeTableCell(u.windbft));
     tr.appendChild(makeTableCellR(u.neersl));
+    tr.appendChild(makeTableCell(u.image));
 }
+
+const weekHeaders = [
+    'dag', 'max', 'min', 'wind', '', 'zon', 'regen', ''
+];
 
 function populateRowWeek(tr, w) {
     tr.appendChild(makeTableCell(dag(w.dag)));
-    tr.appendChild(makeTableCell(w.image));
     tr.appendChild(makeTableCellR(w.max_temp));
     tr.appendChild(makeTableCellR(w.min_temp));
     tr.appendChild(makeTableCell(w.windr));
     tr.appendChild(makeTableCell(w.windbft));
     tr.appendChild(makeTableCellR(w.zond_perc_dag));
     tr.appendChild(makeTableCellR(w.neersl_perc_dag));
+    tr.appendChild(makeTableCell(w.image));
 }
 
 function makeHeaderCell(content) {
@@ -243,23 +251,18 @@ function makeHeaderCell(content) {
     return th;
 }
 
-function headerRowWeek() {
+function headerRow(headers) {
     const tr = document.createElement('tr');
-    tr.appendChild(makeHeaderCell(''));
-    tr.appendChild(makeHeaderCell(''));
-    tr.appendChild(makeHeaderCell('max'));
-    tr.appendChild(makeHeaderCell('min'));
-    tr.appendChild(makeHeaderCell(''));
-    tr.appendChild(makeHeaderCell(''));
-    tr.appendChild(makeHeaderCell('zon'));
-    tr.appendChild(makeHeaderCell('regen'));
+    for (const header of headers) {
+        tr.appendChild(makeHeaderCell(header));
+    }
     return tr;
 }
 
 function fillWeek(result) {
     const week_verwachtingen = result.wk_verw; // 5 items
     const tabel = document.getElementById("week_tabel");
-    tabel.appendChild(headerRowWeek());
+    tabel.appendChild(headerRow(weekHeaders));
     for (let i = 0; i < 5; i++) {
         const tr = document.createElement('tr');
         populateRowWeek(tr, week_verwachtingen[i]);
@@ -267,9 +270,10 @@ function fillWeek(result) {
     }
 }
 
-function fillVerwachtingen(result) {
+function fillVandaag(result) {
     const uur_verwachtingen = result.uur_verw;  // 24 items
     const tabel = document.getElementById("verw_tabel");
+    tabel.appendChild(headerRow(vandaagHeaders));
     for (let i = 0; i < 10; i++) {
         const tr = document.createElement('tr');
         populateRowVandaag(tr, uur_verwachtingen[i]);
@@ -280,7 +284,7 @@ function fillVerwachtingen(result) {
 function toggleDagVerwachtingen(result) {
     const verwachtingen = document.querySelector('.verwachtingen');
     if (verwachtingen.querySelector('tr') === null) {
-        fillVerwachtingen(result);
+        fillVandaag(result);
     }
     const display = verwachtingen.style.display;
     verwachtingen.style.display = display === 'block' ? 'none' : 'block';
