@@ -205,6 +205,12 @@ function dag(s) {
     return w[0];
 }
 
+function dagVanDeWeek(s) {
+    const [day, month, year] = s.split('-');
+    const dayOfWeek = new Date(`${year}-${month}-${day}`).getDay();
+    return ['zo', 'ma', 'di', 'wo', 'do', 'vr', 'za'][dayOfWeek];
+}
+
 function makeTableCell(content) {
     const td = document.createElement('td');
     td.textContent = content;
@@ -218,7 +224,7 @@ function makeTableCellR(content) {
 }
 
 const vandaagHeaders = [
-    '', '', 'wind', '', 'neerslag', ''
+    '', '', 'wind', '', 'regen', ''
 ];
 
 function populateRowVandaag(tr, u) {
@@ -231,14 +237,15 @@ function populateRowVandaag(tr, u) {
 }
 
 const weekHeaders = [
-    'dag', 'max', 'min', 'wind', '', 'zon', 'regen', ''
+    'dag', '', 'max', 'min', 'wind', '', 'zon', 'regen', 'label'
 ];
 
 function populateRowWeek(tr, w) {
+    tr.appendChild(makeTableCell(dagVanDeWeek(w.dag)));
     tr.appendChild(makeTableCell(dag(w.dag)));
     tr.appendChild(makeTableCellR(w.max_temp));
     tr.appendChild(makeTableCellR(w.min_temp));
-    tr.appendChild(makeTableCell(w.windr));
+    tr.appendChild(makeTableCellR(w.windr));
     tr.appendChild(makeTableCell(w.windbft));
     tr.appendChild(makeTableCellR(w.zond_perc_dag));
     tr.appendChild(makeTableCellR(w.neersl_perc_dag));
