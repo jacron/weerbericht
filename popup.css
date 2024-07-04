@@ -161,4 +161,7 @@ img.kaart {
     right: 0;
     z-index: 8;
     background-color: #eee;
+    max-height: 150px;
+    max-width: 400px;
+    display: none;
 }

@@ -302,17 +302,11 @@ function drawVandaag(tijdstippen, temperaturen) {
                     borderColor: 'rgba(255, 99, 132, 1)',
                     backgroundColor: 'rgba(255, 99, 132, 0.2)',
                     yAxisID: 'y'
-                },
-                // {
-                //     label: 'Regen (mm)',
-                //     data: regen,
-                //     borderColor: 'rgba(54, 162, 235, 1)',
-                //     backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                //     yAxisID: 'y1'
-                // }
+                }
             ]
         },
         options: {
+            maintainAspectRatio: false,
             scales: {
                 y: {
                     type: 'linear',
@@ -324,18 +318,7 @@ function drawVandaag(tijdstippen, temperaturen) {
                     ticks: {
                         stepSize: 1
                     }
-                },
-                // y1: {
-                //     type: 'linear',
-                //     position: 'right',
-                //     title: {
-                //         display: true,
-                //         text: 'Regen (mm)'
-                //     },
-                //     grid: {
-                //         drawOnChartArea: false
-                //     }
-                // }
+                }
             }
         }
     });
@@ -346,24 +329,29 @@ function plotVandaag(result) {
     const uur_verwachtingen = result.uur_verw;  // 24 items
     const tijdstippen = [];
     const temperaturen = [];
-    // const regen = [];
     for (let i = 0; i < 10; i++) {
         const verw = uur_verwachtingen[i];
         tijdstippen.push(tweedeWoord(verw.uur));
         temperaturen.push(verw.temp);
-        // regen.push(verw.neersl);
     }
     drawVandaag(tijdstippen, temperaturen);
 }
 
-function toggleDagVerwachtingen(result) {
+function toggleVandaagVerwachtingen(result) {
     const verwachtingen = document.querySelector('.verwachtingen');
-    if (verwachtingen.querySelector('tr') === null) {
-        fillVandaag(result);
-        plotVandaag(result);
+    const canvas = document.getElementById('myChart');
+    const curDisplay = verwachtingen.style.display;
+    if (!curDisplay || curDisplay === 'none') {
+        if (verwachtingen.querySelector('tr') === null) {
+            fillVandaag(result);
+            plotVandaag(result);
+        }
+        verwachtingen.style.display = 'block';
+        canvas.style.display = 'block';
+    } else {
+        verwachtingen.style.display = 'none';
+        canvas.style.display = 'none';
     }
-    const display = verwachtingen.style.display;
-    verwachtingen.style.display = display === 'block' ? 'none' : 'block';
 }
 
 function toggleWeekVerwachtingen(result) {
@@ -380,7 +368,7 @@ function getLiveweer(result) {
     fillForm(result);
     const btnToggleDag = document.getElementById('toggleDag');
     const btnToggleWeek = document.getElementById('toggleWeek');
-    btnToggleDag.addEventListener('click', () => toggleDagVerwachtingen(result));
+    btnToggleDag.addEventListener('click', () => toggleVandaagVerwachtingen(result));
     btnToggleWeek.addEventListener('click', () => toggleWeekVerwachtingen(result))
 }
 
