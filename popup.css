@@ -155,3 +155,10 @@ img.kaart {
 .numeric {
     text-align: right;
 }
+#myChart {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 8;
+    background-color: #eee;
+}
