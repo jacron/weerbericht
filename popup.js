@@ -288,10 +288,74 @@ function fillVandaag(result) {
     }
 }
 
-function drawVandaag(tijdstippen, temperaturen) {
+function drawWindVandaag(tijdstippen, windkracht, windrichting) {
+    const ctx = document.getElementById('chartWind').getContext('2d');
+    const chartWind = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: tijdstippen,
+            datasets: [
+                {
+                    label: 'Windkracht',
+                    data: windkracht,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    yAxisID: 'y'
+                }
+            ]
+        },
+        options: {
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    type: 'linear',
+                    position: 'left',
+                    title: {
+                        display: true,
+                        text: 'Windkracht (BFT)'
+                    },
+                    ticks: {
+                        stepSize: 1
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    labels: {
+                        generateLabels: function(chart) {
+                            return [{
+                                text: '',
+                                fillStyle: 'rgba(75, 192, 192, .1)',
+                                hidden: false,
+                                lineCap: 'butt',
+                                lineDash: [],
+                                lineDashOffset: 0,
+                                lineJoin: 'miter',
+                                lineWidth: 1,
+                                strokeStyle: 'rgba(75, 192, 192, .1)',
+                                pointStyle: 'circle',
+                                rotation: 0
+                            }]
+                        }
+                    }
+                },
+                datalabels: {
+                    align: 'top',
+                    anchor: 'end',
+                    formatter: function (value, context) {
+                        return windrichting[context.dataIndex];
+                    },
+                    color: 'black'
+                }
+            }
+        },
+        plugins: [ChartDataLabels]
+    });
+}
 
-    const ctx = document.getElementById('myChart').getContext('2d');
-    const myChart = new Chart(ctx, {
+function drawTempVandaag(tijdstippen, temperaturen) {
+    const ctx = document.getElementById('chartTemp').getContext('2d');
+    const chartTemp = new Chart(ctx, {
         type: 'line',
         data: {
             labels: tijdstippen,
@@ -319,27 +383,41 @@ function drawVandaag(tijdstippen, temperaturen) {
                         stepSize: 1
                     }
                 }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                }
             }
         }
     });
-
 }
 
 function plotVandaag(result) {
     const uur_verwachtingen = result.uur_verw;  // 24 items
     const tijdstippen = [];
+    // const tijdstippenTemp = [];
     const temperaturen = [];
+    const windkracht = [];
+    const windrichting = [];
     for (let i = 0; i < 10; i++) {
         const verw = uur_verwachtingen[i];
         tijdstippen.push(tweedeWoord(verw.uur));
+        windkracht.push(verw.windbft);
+        windrichting.push(verw.windr);
         temperaturen.push(verw.temp);
     }
-    drawVandaag(tijdstippen, temperaturen);
+    // for (let verw of uur_verwachtingen) {
+        // tijdstippenTemp.push(tweedeWoord(verw.uur));
+    // }
+    drawWindVandaag(tijdstippen, windkracht, windrichting);
+    drawTempVandaag(tijdstippen, temperaturen);
 }
 
 function toggleVandaagVerwachtingen(result) {
     const verwachtingen = document.querySelector('.verwachtingen');
-    const canvas = document.getElementById('myChart');
+    const canvasWind = document.getElementById('chartWind');
+    const canvasTemp = document.getElementById('chartTemp');
     const curDisplay = verwachtingen.style.display;
     if (!curDisplay || curDisplay === 'none') {
         if (verwachtingen.querySelector('tr') === null) {
@@ -347,10 +425,12 @@ function toggleVandaagVerwachtingen(result) {
             plotVandaag(result);
         }
         verwachtingen.style.display = 'block';
-        canvas.style.display = 'block';
+        canvasWind.style.display = 'block';
+        canvasTemp.style.display = 'block';
     } else {
         verwachtingen.style.display = 'none';
-        canvas.style.display = 'none';
+        canvasWind.style.display = 'none';
+        canvasTemp.style.display = 'none';
     }
 }
 
@@ -386,18 +466,18 @@ function fetchWeather(locatie) {
         .then(getLiveweer, onError);
 }
 
-function fetchFromLocation() {
-    navigator.geolocation.getCurrentPosition(
-        (loc) => {
-            const { coords } = loc;
-            let { latitude, longitude } = coords;
-            fetchWeather(`${latitude},${longitude}`);
-        },
-        (err) => {
-            console.error(err);
-        }
-    );
-}
+// function fetchFromLocation() {
+//     navigator.geolocation.getCurrentPosition(
+//         (loc) => {
+//             const { coords } = loc;
+//             let { latitude, longitude } = coords;
+//             fetchWeather(`${latitude},${longitude}`);
+//         },
+//         (err) => {
+//             console.error(err);
+//         }
+//     );
+// }
 
 document.addEventListener('DOMContentLoaded',  () => {
     fetchWeather(`Hoogland`);
