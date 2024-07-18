@@ -38,7 +38,7 @@ img.kaart {
     overflow-y: auto;
     line-height: 1.3;
 }
-.verwachtingen {
+.verwachtingen-vandaag {
     position: absolute;
     top: 340px;
     right: 20px;
@@ -47,9 +47,9 @@ img.kaart {
     display: none;
     padding: 10px;
 }
-.week {
+.verwachtingen-week {
     position: absolute;
-    top: 60px;
+    top: 360px;
     right: 20px;
     background-color: #defeff;
     z-index: 1;
@@ -155,7 +155,7 @@ img.kaart {
 .numeric {
     text-align: right;
 }
-#chartWind {
+#chartWindVandaag {
     position: absolute;
     top: 3px;
     right: 3px;
@@ -165,7 +165,7 @@ img.kaart {
     max-width: 400px;
     display: none;
 }
-#chartTemp {
+#chartTempVandaag {
     position: absolute;
     top: 170px;
     right: 3px;
@@ -175,3 +175,24 @@ img.kaart {
     max-width: 400px;
     display: none;
 }
+#chartWindWeek {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    z-index: 8;
+    background-color: #eee;
+    max-height: 150px;
+    max-width: 400px;
+    display: none;
+}
+#chartTempWeek {
+    position: absolute;
+    top: 170px;
+    right: 3px;
+    z-index: 8;
+    background-color: #eee;
+    max-height: 150px;
+    max-width: 400px;
+    display: none;
+}
+

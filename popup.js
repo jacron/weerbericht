@@ -1,5 +1,9 @@
 // http://weerlive.nl/
 // const locatie = 'zeldert';
+import {plotVandaag, plotWeek} from "./plot.js";
+import {fillVandaag, fillWeek} from "./table.js";
+import {getTime} from "./util.js";
+
 const apikey = 'd5fce13661';
 const endpoint = 'weerlive_api_v2.php';
 const WEER_LIVE_API = `https://weerlive.nl/api/${endpoint}?key=${apikey}&locatie=`;  // ${locatie}`;
@@ -35,6 +39,7 @@ const hide_legend = document.querySelector('.hide-legenda');
 const weertabel = document.querySelector('.weertabel');
 
 let actueleOptie = MENU_WIND;
+let liveweerResult = null;
 
 function showIcon(src) {
     document.getElementById('icon').src = './icons/' + src + '.png';
@@ -86,6 +91,7 @@ function prevMenuOption() {
 }
 
 function onKeydown(e) {
+    console.log(e.key)
     switch (e.key) {
         case 'ArrowRight':
             actueleOptie = nextMenuOption();
@@ -94,6 +100,12 @@ function onKeydown(e) {
         case 'ArrowLeft':
             actueleOptie = prevMenuOption();
             showMenu(actueleOptie);
+            break;
+        case 'v':
+            toggleVandaagVerwachtingen();
+            break;
+        case 'w':
+            toggleWeekVerwachtingen();
             break;
     }
 }
@@ -160,19 +172,6 @@ function bindMenu() {
     document.getElementById(MENU_WIND).addEventListener('click', doMenu);
 }
 
-function fillZero(n) {
-    if (n< 10) {
-        return '0' + n;
-    } else {
-        return n;
-    }
-}
-
-function getTime() {
-    const today = new Date();
-    return today.getHours() + ":" + fillZero(today.getMinutes()) + " u.";
-}
-
 function showTime() {
     document.getElementById(DIV_TIJD).innerText = getTime();
 }
@@ -195,256 +194,59 @@ function showWindKrachtKaart() {
         });
 }
 
-function tweedeWoord(s) {
-    const w = s.split(' ');
-    return w[1];
+function toggleDisplayVandaag(display) {
+    const verwachtingenVandaag = document.querySelector('.verwachtingen-vandaag');
+    const canvasWind = document.getElementById('chartWindVandaag');
+    const canvasTempVandaag = document.getElementById('chartTempVandaag');
+    verwachtingenVandaag.style.display = display;
+    canvasWind.style.display = display;
+    canvasTempVandaag.style.display = display;
 }
 
-function dag(s) {
-    const w = s.split('-');
-    return w[0];
-}
-
-function dagVanDeWeek(s) {
-    const [day, month, year] = s.split('-');
-    const dayOfWeek = new Date(`${year}-${month}-${day}`).getDay();
-    return ['zo', 'ma', 'di', 'wo', 'do', 'vr', 'za'][dayOfWeek];
-}
-
-function makeTableCell(content) {
-    const td = document.createElement('td');
-    td.textContent = content;
-    return td;
-}
-
-function makeTableCellR(content) {
-    const td = makeTableCell(content);
-    td.classList.add('numeric');
-    return td;
-}
-
-const vandaagHeaders = [
-    '', '', 'w', '', 'regen', ''
-];
-
-function populateRowVandaag(tr, u) {
-    tr.appendChild(makeTableCell(tweedeWoord(u.uur)));
-    tr.appendChild(makeTableCellR(u.temp));
-    tr.appendChild(makeTableCell(u.windr));
-    tr.appendChild(makeTableCell(u.windbft));
-    tr.appendChild(makeTableCellR(u.neersl));
-    tr.appendChild(makeTableCell(u.image));
-}
-
-const weekHeaders = [
-    'dag', '', 'max', 'min', 'wind', '', 'zon', 'regen', 'label'
-];
-
-function populateRowWeek(tr, w) {
-    tr.appendChild(makeTableCell(dagVanDeWeek(w.dag)));
-    tr.appendChild(makeTableCell(dag(w.dag)));
-    tr.appendChild(makeTableCellR(w.max_temp));
-    tr.appendChild(makeTableCellR(w.min_temp));
-    tr.appendChild(makeTableCellR(w.windr));
-    tr.appendChild(makeTableCell(w.windbft));
-    tr.appendChild(makeTableCellR(w.zond_perc_dag));
-    tr.appendChild(makeTableCellR(w.neersl_perc_dag));
-    tr.appendChild(makeTableCell(w.image));
-}
-
-function makeHeaderCell(content) {
-    const th = document.createElement('th');
-    th.textContent = content;
-    return th;
-}
-
-function headerRow(headers) {
-    const tr = document.createElement('tr');
-    for (const header of headers) {
-        tr.appendChild(makeHeaderCell(header));
-    }
-    return tr;
-}
-
-function fillWeek(result) {
-    const week_verwachtingen = result.wk_verw; // 5 items
-    const tabel = document.getElementById("week_tabel");
-    tabel.appendChild(headerRow(weekHeaders));
-    for (let i = 0; i < 5; i++) {
-        const tr = document.createElement('tr');
-        populateRowWeek(tr, week_verwachtingen[i]);
-        tabel.appendChild(tr);
-    }
-}
-
-function fillVandaag(result) {
-    const uur_verwachtingen = result.uur_verw;  // 24 items
-    const tabel = document.getElementById("verw_tabel");
-    tabel.appendChild(headerRow(vandaagHeaders));
-    for (let i = 0; i < 10; i++) {
-        const tr = document.createElement('tr');
-        populateRowVandaag(tr, uur_verwachtingen[i]);
-        tabel.appendChild(tr);
-    }
-}
-
-function drawWindVandaag(tijdstippen, windkracht, windrichting) {
-    const ctx = document.getElementById('chartWind').getContext('2d');
-    const chartWind = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: tijdstippen,
-            datasets: [
-                {
-                    label: 'Windkracht',
-                    data: windkracht,
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    yAxisID: 'y'
-                }
-            ]
-        },
-        options: {
-            maintainAspectRatio: false,
-            scales: {
-                y: {
-                    type: 'linear',
-                    position: 'left',
-                    title: {
-                        display: true,
-                        text: 'Windkracht (BFT)'
-                    },
-                    ticks: {
-                        stepSize: 1
-                    }
-                }
-            },
-            plugins: {
-                legend: {
-                    labels: {
-                        generateLabels: function(chart) {
-                            return [{
-                                text: '',
-                                fillStyle: 'rgba(75, 192, 192, .1)',
-                                hidden: false,
-                                lineCap: 'butt',
-                                lineDash: [],
-                                lineDashOffset: 0,
-                                lineJoin: 'miter',
-                                lineWidth: 1,
-                                strokeStyle: 'rgba(75, 192, 192, .1)',
-                                pointStyle: 'circle',
-                                rotation: 0
-                            }]
-                        }
-                    }
-                },
-                datalabels: {
-                    align: 'top',
-                    anchor: 'end',
-                    formatter: function (value, context) {
-                        return windrichting[context.dataIndex];
-                    },
-                    color: 'black'
-                }
-            }
-        },
-        plugins: [ChartDataLabels]
-    });
-}
-
-function drawTempVandaag(tijdstippen, temperaturen) {
-    const ctx = document.getElementById('chartTemp').getContext('2d');
-    const chartTemp = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: tijdstippen,
-            datasets: [
-                {
-                    label: 'Temperatuur (°C)',
-                    data: temperaturen,
-                    borderColor: 'rgba(255, 99, 132, 1)',
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    yAxisID: 'y'
-                }
-            ]
-        },
-        options: {
-            maintainAspectRatio: false,
-            scales: {
-                y: {
-                    type: 'linear',
-                    position: 'left',
-                    title: {
-                        display: true,
-                        text: 'Temperatuur (°C)'
-                    },
-                    ticks: {
-                        stepSize: 1
-                    }
-                }
-            },
-            plugins: {
-                legend: {
-                    display: false
-                }
-            }
-        }
-    });
-}
-
-function plotVandaag(result) {
-    const uur_verwachtingen = result.uur_verw;  // 24 items
-    const tijdstippen = [];
-    // const tijdstippenTemp = [];
-    const temperaturen = [];
-    const windkracht = [];
-    const windrichting = [];
-    for (let i = 0; i < 10; i++) {
-        const verw = uur_verwachtingen[i];
-        tijdstippen.push(tweedeWoord(verw.uur));
-        windkracht.push(verw.windbft);
-        windrichting.push(verw.windr);
-        temperaturen.push(verw.temp);
-    }
-    // for (let verw of uur_verwachtingen) {
-        // tijdstippenTemp.push(tweedeWoord(verw.uur));
-    // }
-    drawWindVandaag(tijdstippen, windkracht, windrichting);
-    drawTempVandaag(tijdstippen, temperaturen);
+function toggleDisplayWeek(display) {
+    const verwachtingenWeek = document.querySelector('.verwachtingen-week');
+    const canvasTempWeek = document.getElementById('chartTempWeek');
+    const canvasWindWeek = document.getElementById('chartWindWeek');
+    verwachtingenWeek.style.display = display;
+    canvasTempWeek.style.display = display;
+    canvasWindWeek.style.display = display;
 }
 
 function toggleVandaagVerwachtingen(result) {
-    const verwachtingen = document.querySelector('.verwachtingen');
-    const canvasWind = document.getElementById('chartWind');
-    const canvasTemp = document.getElementById('chartTemp');
-    const curDisplay = verwachtingen.style.display;
+    if (!result) result = liveweerResult;
+    const verwachtingenVandaag = document.querySelector('.verwachtingen-vandaag');
+    const curDisplay = verwachtingenVandaag.style.display;
     if (!curDisplay || curDisplay === 'none') {
-        if (verwachtingen.querySelector('tr') === null) {
+        if (verwachtingenVandaag.querySelector('tr') === null) {
             fillVandaag(result);
             plotVandaag(result);
         }
-        verwachtingen.style.display = 'block';
-        canvasWind.style.display = 'block';
-        canvasTemp.style.display = 'block';
+        toggleDisplayVandaag('block');
+        toggleDisplayWeek('none');
     } else {
-        verwachtingen.style.display = 'none';
-        canvasWind.style.display = 'none';
-        canvasTemp.style.display = 'none';
+        toggleDisplayVandaag('none');
     }
 }
 
 function toggleWeekVerwachtingen(result) {
-    const verwachtingen = document.querySelector('.week');
-    if (verwachtingen.querySelector('tr') === null) {
+    if (!result) result = liveweerResult;
+    const verwachtingenWeek = document.querySelector('.verwachtingen-week');
+    if (verwachtingenWeek.querySelector('tr') === null) {
         fillWeek(result);
+        plotWeek(result);
     }
-    const display = verwachtingen.style.display;
-    verwachtingen.style.display = display === 'block' ? 'none' : 'block';
+    const display = verwachtingenWeek.style.display;
+    if (display === 'block') {
+        toggleDisplayWeek('none');
+    } else {
+        toggleDisplayWeek('block');
+        toggleDisplayVandaag('none');
+    }
 }
 
 function getLiveweer(result) {
     console.log(result);
+    liveweerResult = result;
     fillForm(result);
     const btnToggleDag = document.getElementById('toggleDag');
     const btnToggleWeek = document.getElementById('toggleWeek');
@@ -457,13 +259,16 @@ function onError(error) {
 }
 
 function fetchWeather(locatie) {
+    fetch(`${WEER_LIVE_API}${locatie}`)
+        .then(res => res.json())
+        .then(getLiveweer, onError);
+}
+
+function init() {
     bindImg();
     bindMenu();
     bindKeys();
     showWindKrachtKaart();
-    fetch(`${WEER_LIVE_API}${locatie}`)
-        .then(res => res.json())
-        .then(getLiveweer, onError);
 }
 
 // function fetchFromLocation() {
@@ -480,6 +285,7 @@ function fetchWeather(locatie) {
 // }
 
 document.addEventListener('DOMContentLoaded',  () => {
+    init();
     fetchWeather(`Hoogland`);
     // fetchFromLocation();
 });
