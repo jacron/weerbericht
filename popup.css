@@ -155,44 +155,28 @@ img.kaart {
 .numeric {
     text-align: right;
 }
-#chartWindVandaag {
+canvas {
     position: absolute;
-    top: 3px;
-    right: 3px;
-    z-index: 8;
-    background-color: #eee;
-    max-height: 150px;
+    max-height: 125px;
     max-width: 400px;
+    background-color: #eee;
     display: none;
+    z-index: 8;
+}
+#chartWindVandaag {
+    top: 34px;
+    right: 3px;
 }
 #chartTempVandaag {
-    position: absolute;
     top: 170px;
     right: 3px;
-    z-index: 8;
-    background-color: #eee;
-    max-height: 150px;
-    max-width: 400px;
-    display: none;
 }
 #chartWindWeek {
-    position: absolute;
-    top: 3px;
+    top: 34px;
     right: 3px;
-    z-index: 8;
-    background-color: #eee;
-    max-height: 150px;
-    max-width: 400px;
-    display: none;
 }
 #chartTempWeek {
-    position: absolute;
     top: 170px;
     right: 3px;
-    z-index: 8;
-    background-color: #eee;
-    max-height: 150px;
-    max-width: 400px;
-    display: none;
 }
 

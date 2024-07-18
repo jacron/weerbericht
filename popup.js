@@ -194,6 +194,20 @@ function showWindKrachtKaart() {
         });
 }
 
+function markButton(button, bold) {
+    button.style.fontWeight = bold? 'bold' : 'normal';
+}
+
+function markButtonVandaag(bold) {
+    const btnToggleDag = document.getElementById('btnToggleDag');
+    markButton(btnToggleDag, bold);
+}
+
+function markButtonWeek(bold) {
+    const btnToggleWeek = document.getElementById('btnToggleWeek');
+    markButton(btnToggleWeek, bold);
+}
+
 function toggleDisplayVandaag(display) {
     const verwachtingenVandaag = document.querySelector('.verwachtingen-vandaag');
     const canvasWind = document.getElementById('chartWindVandaag');
@@ -201,6 +215,8 @@ function toggleDisplayVandaag(display) {
     verwachtingenVandaag.style.display = display;
     canvasWind.style.display = display;
     canvasTempVandaag.style.display = display;
+    markButtonVandaag(display === 'block');
+    markButtonWeek(display !== 'block');
 }
 
 function toggleDisplayWeek(display) {
@@ -210,6 +226,8 @@ function toggleDisplayWeek(display) {
     verwachtingenWeek.style.display = display;
     canvasTempWeek.style.display = display;
     canvasWindWeek.style.display = display;
+    markButtonVandaag(display !== 'block');
+    markButtonWeek(display === 'block');
 }
 
 function toggleVandaagVerwachtingen(result) {
@@ -248,10 +266,14 @@ function getLiveweer(result) {
     console.log(result);
     liveweerResult = result;
     fillForm(result);
-    const btnToggleDag = document.getElementById('toggleDag');
-    const btnToggleWeek = document.getElementById('toggleWeek');
-    btnToggleDag.addEventListener('click', () => toggleVandaagVerwachtingen(result));
-    btnToggleWeek.addEventListener('click', () => toggleWeekVerwachtingen(result))
+    const btnToggleDag = document.getElementById('btnToggleDag');
+    const btnToggleWeek = document.getElementById('btnToggleWeek');
+    btnToggleDag.addEventListener('click', () => {
+        toggleVandaagVerwachtingen(result);
+    });
+    btnToggleWeek.addEventListener('click', () => {
+        toggleWeekVerwachtingen(result);
+    })
 }
 
 function onError(error) {
