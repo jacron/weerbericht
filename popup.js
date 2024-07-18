@@ -40,6 +40,7 @@ const weertabel = document.querySelector('.weertabel');
 
 let actueleOptie = MENU_WIND;
 let liveweerResult = null;
+let weekOfVandaag = '';
 
 function showIcon(src) {
     document.getElementById('icon').src = './icons/' + src + '.png';
@@ -194,18 +195,11 @@ function showWindKrachtKaart() {
         });
 }
 
-function markButton(button, bold) {
-    button.style.fontWeight = bold? 'bold' : 'normal';
-}
-
-function markButtonVandaag(bold) {
+function markButtons() {
     const btnToggleDag = document.getElementById('btnToggleDag');
-    markButton(btnToggleDag, bold);
-}
-
-function markButtonWeek(bold) {
     const btnToggleWeek = document.getElementById('btnToggleWeek');
-    markButton(btnToggleWeek, bold);
+    btnToggleDag.style.fontWeight = weekOfVandaag === 'vandaag' ? 'bold' : 'normal';
+    btnToggleWeek.style.fontWeight = weekOfVandaag === 'week' ? 'bold' : 'normal';
 }
 
 function toggleDisplayVandaag(display) {
@@ -215,8 +209,7 @@ function toggleDisplayVandaag(display) {
     verwachtingenVandaag.style.display = display;
     canvasWind.style.display = display;
     canvasTempVandaag.style.display = display;
-    markButtonVandaag(display === 'block');
-    markButtonWeek(display !== 'block');
+    markButtons();
 }
 
 function toggleDisplayWeek(display) {
@@ -226,8 +219,7 @@ function toggleDisplayWeek(display) {
     verwachtingenWeek.style.display = display;
     canvasTempWeek.style.display = display;
     canvasWindWeek.style.display = display;
-    markButtonVandaag(display !== 'block');
-    markButtonWeek(display === 'block');
+    markButtons();
 }
 
 function toggleVandaagVerwachtingen(result) {
@@ -239,9 +231,11 @@ function toggleVandaagVerwachtingen(result) {
             fillVandaag(result);
             plotVandaag(result);
         }
+        weekOfVandaag = 'vandaag';
         toggleDisplayVandaag('block');
         toggleDisplayWeek('none');
     } else {
+        weekOfVandaag = '';
         toggleDisplayVandaag('none');
     }
 }
@@ -255,8 +249,10 @@ function toggleWeekVerwachtingen(result) {
     }
     const display = verwachtingenWeek.style.display;
     if (display === 'block') {
+        weekOfVandaag = '';
         toggleDisplayWeek('none');
     } else {
+        weekOfVandaag = 'week';
         toggleDisplayWeek('block');
         toggleDisplayVandaag('none');
     }
