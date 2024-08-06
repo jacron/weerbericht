@@ -71,6 +71,10 @@ img.kaart {
     border-radius: 7px;
 }
 .temp {
+    color: red;
+    font-weight: bold;
+}
+.wind {
     color: blue;
     font-weight: bold;
 }
@@ -157,26 +161,23 @@ img.kaart {
 }
 canvas {
     position: absolute;
+    right: 20px;
     max-height: 125px;
-    max-width: 400px;
-    background-color: #eee;
+    max-width: 360px;
+    background-color: rgba(255,255,255,.7);
     display: none;
     z-index: 8;
 }
 #chartWindVandaag {
     top: 34px;
-    right: 3px;
 }
 #chartTempVandaag {
     top: 170px;
-    right: 3px;
 }
 #chartWindWeek {
     top: 34px;
-    right: 3px;
 }
 #chartTempWeek {
     top: 170px;
-    right: 3px;
 }
 
