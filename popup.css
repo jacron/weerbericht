@@ -17,6 +17,7 @@ body {
 img.kaart {
     width: 550px;
     display: none;
+    clip-path: inset(3px);
 }
 .content {
     width: 550px;
