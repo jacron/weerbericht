@@ -92,7 +92,7 @@ function prevMenuOption() {
 }
 
 function onKeydown(e) {
-    console.log(e.key)
+    // console.log(e.key)
     switch (e.key) {
         case 'ArrowRight':
             actueleOptie = nextMenuOption();
@@ -107,6 +107,14 @@ function onKeydown(e) {
             break;
         case 'w':
             toggleWeekVerwachtingen();
+            break;
+        case 'Escape':
+            if (hideVandaagVerwachtingen()) {
+                e.preventDefault();
+            }
+            if (hideWeekVerwachtingen()) {
+                e.preventDefault();
+            }
             break;
     }
 }
@@ -220,6 +228,26 @@ function toggleDisplayWeek(display) {
     canvasTempWeek.style.display = display;
     canvasWindWeek.style.display = display;
     markButtons();
+}
+
+function hideVandaagVerwachtingen() {
+    const verwachtingenVandaag = document.querySelector('.verwachtingen-vandaag');
+    const curDisplay = verwachtingenVandaag.style.display;
+    if (curDisplay && curDisplay === 'block') {
+        toggleDisplayVandaag('none');
+        return true;
+    }
+    return false;
+}
+
+function hideWeekVerwachtingen() {
+    const verwachtingenWeek = document.querySelector('.verwachtingen-week');
+    const curDisplay = verwachtingenWeek.style.display;
+    if (curDisplay && curDisplay === 'block') {
+        toggleDisplayWeek('none');
+        return true;
+    }
+    return false;
 }
 
 function toggleVandaagVerwachtingen(result) {
