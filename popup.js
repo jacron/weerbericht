@@ -217,7 +217,7 @@ function toggleDisplayVandaag(display) {
     verwachtingenVandaag.style.display = display;
     canvasWind.style.display = display;
     canvasTempVandaag.style.display = display;
-    markButtons();
+    // markButtons();
 }
 
 function toggleDisplayWeek(display) {
@@ -227,7 +227,7 @@ function toggleDisplayWeek(display) {
     verwachtingenWeek.style.display = display;
     canvasTempWeek.style.display = display;
     canvasWindWeek.style.display = display;
-    markButtons();
+    // markButtons();
 }
 
 function hideVandaagVerwachtingen() {

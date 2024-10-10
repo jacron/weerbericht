@@ -44,7 +44,7 @@ img.kaart {
     top: 340px;
     right: 20px;
     background-color: #defeff;
-    z-index: 1;
+    z-index: 2;
     display: none;
     padding: 10px;
 }
@@ -59,9 +59,16 @@ img.kaart {
 }
 .controls {
     position: absolute;
-    left: 400px;
-    bottom: 10px;
-    display: flex;
+    left: 450px;
+    bottom: 18px;
+    z-index: 1;
+    line-height: 1.7;
+}
+.controls > div {
+    cursor: pointer;
+}
+.controls > div:hover {
+    background-color: #defeff;
 }
 .closer {
     position: absolute;
@@ -181,4 +188,3 @@ canvas {
 #chartTempWeek {
     top: 170px;
 }
-
