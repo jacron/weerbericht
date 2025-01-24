@@ -1,5 +1,13 @@
 import {dag, dagVanDeWeek, tweedeWoord} from "./util.js";
 
+const vandaagHeaders = [
+    '', '', '', '', 'regen', ''
+];
+
+const weekHeaders = [
+    '', '', 'min', 'max', '', '', 'zon', 'regen', ''
+];
+
 function makeTableCell(content) {
     const td = document.createElement('td');
     td.textContent = content;
@@ -12,32 +20,26 @@ function makeTableCellR(content) {
     return td;
 }
 
-const vandaagHeaders = [
-    '', 't', 'w', '', 'regen', ''
-];
-
 function populateRowVandaag(tr, u) {
     const tdTemp = makeTableCellR(u.temp);
-    tdTemp.style.color = 'red';
+    tdTemp.className = 'vandaagTemp';
+
     tr.appendChild(makeTableCell(tweedeWoord(u.uur)));
     tr.appendChild(tdTemp);
-    tr.appendChild(makeTableCell(u.windr));
+    tr.appendChild(makeTableCellR(u.windr));
     tr.appendChild(makeTableCell(u.windbft));
     tr.appendChild(makeTableCellR(u.neersl));
     tr.appendChild(makeTableCell(u.image));
 }
 
-const weekHeaders = [
-    'dag', '', 'max', 'min', 'wind', '', 'zon', 'regen', 'label'
-];
-
 function populateRowWeek(tr, w) {
-    const tdMax = makeTableCell(w.max_temp);
+    const tdMax = makeTableCellR(w.max_temp);
     tdMax.style.color = 'red';
-    tr.appendChild(makeTableCell(dagVanDeWeek(w.dag)));
+
+    tr.appendChild(makeTableCellR(dagVanDeWeek(w.dag)));
     tr.appendChild(makeTableCell(dag(w.dag)));
-    tr.appendChild(tdMax);
     tr.appendChild(makeTableCellR(w.min_temp));
+    tr.appendChild(tdMax);
     tr.appendChild(makeTableCellR(w.windr));
     tr.appendChild(makeTableCell(w.windbft));
     tr.appendChild(makeTableCellR(w.zond_perc_dag));
@@ -51,10 +53,24 @@ function makeHeaderCell(content) {
     return th;
 }
 
+function makeColspanHeaderCell(content, colspan) {
+    const th = document.createElement('th');
+    th.textContent = content;
+    th.colSpan = colspan;
+    return th;
+}
+
 function headerRow(headers) {
     const tr = document.createElement('tr');
-    for (const header of headers) {
-        const cell = makeHeaderCell(header);
+    for (let header of headers) {
+        const w = header.split(':');
+        let cell;
+        if (w.length > 1) {
+            header = w[0];
+            cell = makeColspanHeaderCell(header, w[1]);
+        } else {
+            cell = makeHeaderCell(header);
+        }
         if (header === 'max' || header === 't') {
             cell.style.color = 'red';
         }

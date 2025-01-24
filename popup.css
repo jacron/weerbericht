@@ -188,3 +188,38 @@ canvas {
 #chartTempWeek {
     top: 170px;
 }
+#week_tabel {
+    border-collapse: collapse;
+}
+#week_tabel td:nth-child(2),
+#week_tabel td:nth-child(4),
+#week_tabel td:nth-child(6),
+#week_tabel td:nth-child(8) {
+    padding-right: 14px;
+}
+#week_tabel td:nth-child(1),
+#week_tabel td:nth-child(5) {
+    padding-right: 0;
+}
+#week_tabel td {
+    padding: 4px;
+}
+#week_tabel th {
+    padding-bottom: 8px;
+}
+#verw_tabel {
+    border-collapse: collapse;
+}
+#verw_tabel td {
+    padding: 4px;
+}
+#verw_tabel td:nth-child(3) {
+    padding-right: 0;
+}
+#verw_tabel td:nth-child(1) {
+    padding: 4px 16px 4px 0;
+}
+.vandaagTemp {
+    color: red;
+    padding-right: 12px !important;
+}
