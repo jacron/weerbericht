@@ -53,6 +53,8 @@
             </tbody>
         </table>
         <div class="menu">
+            <a id="menu_vandaag">vandaag</a>
+            <span> | </span>
             <a id="menu_temp">temp</a>
             <span> | </span>
             <a id="menu_buien">buien</a>
@@ -76,9 +78,10 @@
         <div id="btnToggleWeek">[W]eek</div>
     </div>
     <div id="wait">loading</div>
-    <img class="kaart" src="https://cdn.knmi.nl/knmi/map/page/weer/actueel-weer/windkracht.png" alt="windkaart" id="windkracht-kaart">
-    <img class="kaart" src="https://cdn.knmi.nl/knmi/map/page/weer/actueel-weer/temperatuur.png" alt="tempkaart" id="temperatuur-kaart">
-    <img class="kaart" src="https://cdn.knmi.nl/knmi/map/page/weer/actueel-weer/neerslagradar/WWWRADARBFT_loop.gif" alt="buienkaart" id="buien-kaart">
+    <img class="kaart" alt="vandaagkaart" id="vandaag-kaart" src="">
+    <img class="kaart" alt="windkaart" id="windkracht-kaart" src="">
+    <img class="kaart" alt="tempkaart" id="temperatuur-kaart" src="">
+    <img class="kaart" alt="buienkaart" id="buien-kaart" src="">
     <canvas id="chartWindVandaag"></canvas>
     <canvas id="chartTempVandaag"></canvas>
     <canvas id="chartWindWeek"></canvas>

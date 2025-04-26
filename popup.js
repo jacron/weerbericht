@@ -8,6 +8,7 @@ const apikey = 'd5fce13661';
 const endpoint = 'weerlive_api_v2.php';
 const WEER_LIVE_API = `https://weerlive.nl/api/${endpoint}?key=${apikey}&locatie=`;  // ${locatie}`;
 const IMG_BINDINGS = [
+    ['vandaag-kaart', 'https://cdn.knmi.nl/knmi/map/current/weather/forecast/kaart_verwachtingen_Vandaag_dag.gif'],
     ['windkracht-kaart', 'https://cdn.knmi.nl/knmi/map/page/weer/actueel-weer/windkracht.png'],
     ['temperatuur-kaart', 'https://cdn.knmi.nl/knmi/map/page/weer/actueel-weer/temperatuur.png'],
     ['buien-kaart', 'https://cdn.knmi.nl/knmi/map/page/weer/actueel-weer/neerslagradar/WWWRADARBFT_loop.gif'],
@@ -27,11 +28,13 @@ const VERWACHTING_DATA_BINDINGS = [
     ['tmax', 'max_temp'],
 ];
 
+const MENU_VANDAAG = 'menu_vandaag';
 const MENU_BUIEN = 'menu_buien';
 const MENU_WIND = 'menu_wind';
 const MENU_TEMP = 'menu_temp';
 
 const DIV_TIJD = 'div_tijd';
+const kaart_vandaag = document.getElementById('vandaag-kaart');
 const kaart_buien = document.getElementById('buien-kaart');
 const kaart_wind = document.getElementById('windkracht-kaart');
 const kaart_temp = document.getElementById('temperatuur-kaart');
@@ -70,19 +73,22 @@ function bindImg() {
 }
 
 function nextMenuOption() {
-    /* temp > buien > wind */
-    if (actueleOptie === MENU_WIND) {
+    /* vandaag > temp > buien > wind */
+    if (actueleOptie === MENU_VANDAAG) {
+        return MENU_WIND;
+    } else if (actueleOptie === MENU_WIND) {
         return MENU_TEMP;
     } else if (actueleOptie === MENU_TEMP) {
         return MENU_BUIEN;
     } else if (actueleOptie === MENU_BUIEN) {
-        return MENU_WIND;
+        return MENU_VANDAAG;
     }
 }
 
 function prevMenuOption() {
-    /* temp > buien > wind */
-    if (actueleOptie === MENU_WIND) {
+    if (actueleOptie === MENU_VANDAAG) {
+        return MENU_WIND;
+    } else if (actueleOptie === MENU_WIND) {
         return MENU_BUIEN;
     } else if (actueleOptie === MENU_BUIEN) {
         return MENU_TEMP;
@@ -132,6 +138,7 @@ function show(element) {
 }
 
 function hideKaarten() {
+    hide(kaart_vandaag);
     hide(kaart_buien);
     hide(kaart_temp);
     hide(kaart_wind);
@@ -162,6 +169,11 @@ function showMenu(id) {
         case MENU_TEMP:
             show(kaart_temp);
             break;
+        case MENU_VANDAAG:
+            show(kaart_vandaag);
+            hide(hide_legend);
+            hide(weertabel);
+            break;
         case MENU_BUIEN:
             show(kaart_buien);
             hide(hide_legend);
@@ -176,6 +188,7 @@ function doMenu(e) {
 }
 
 function bindMenu() {
+    document.getElementById(MENU_VANDAAG).addEventListener('click', doMenu);
     document.getElementById(MENU_BUIEN).addEventListener('click', doMenu);
     document.getElementById(MENU_TEMP).addEventListener('click', doMenu);
     document.getElementById(MENU_WIND).addEventListener('click', doMenu);

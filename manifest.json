@@ -14,7 +14,7 @@
     "service_worker": "background.js"
   },
   "action": {
-    "default_icon": "images/weerbericht16.png",
+    "default_icon": "images/knmi.png",
     "default_title": "Weerbericht",
     "default_popup": "popup.html"
   },
