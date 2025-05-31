@@ -145,20 +145,30 @@ img.kaart {
     background-color: rgba(250, 250, 250, .8);
     padding: 4px 10px;
 }
+.ext .hide-legenda {
+    top: 76px;
+    height: 350px;
+    left: 12px;
+}
 .hide-legenda {
     position: absolute;
-    top:76px;
-    left: 12px;
-    height: 350px;
+    top:56px;
+    left: 10px;
+    height: 244px;
     width: 52px;
     background-color: #d4fffd;
 }
-.weertabel {
-    position: absolute;
+.ext .weertabel {
     top: 508px;
     left: 18px;
     width: 290px;
+}
+.weertabel {
+    position: absolute;
+    top: 358px;
+    left: 8px;
     height: 80px;
+    width: 210px;
     font-size: 15px;
     z-index: 1;
     line-height: 1.4;
