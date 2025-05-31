@@ -15,12 +15,12 @@ body {
     width: 156px;
 }
 img.kaart {
-    width: 550px;
+    width: 100%;
     display: none;
     clip-path: inset(3px);
 }
-.content {
-    width: 550px;
+.ext .content {
+    min-width: 550px;
 }
 #alarmtxt {
     padding: 6px;
@@ -59,10 +59,14 @@ img.kaart {
 }
 .controls {
     position: absolute;
-    left: 450px;
-    bottom: 18px;
+    left: 10px;
+    top: 620px;
     z-index: 1;
     line-height: 1.7;
+}
+.ext .controls {
+    left: 450px;
+    top: 540px;
 }
 .controls > div {
     cursor: pointer;

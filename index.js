@@ -334,10 +334,45 @@ function init() {
 //     );
 // }
 
+function getLocation(cb){          // cb({lat, lon} | null)
+    const ok = pos => cb({lat:pos.coords.latitude, lon:pos.coords.longitude});
+    const ko = () => fetch('https://ipapi.co/json/')
+        .then(r=>r.json())
+        .then(d=>{
+            console.log(`Using fallback location: ${d.city}, ${d.region}, ${d.country_name}`);
+            cb({lat:d.latitude, lon:d.longitude})
+        })
+        .catch(()=>cb(null));
+
+    if('geolocation' in navigator){
+        navigator.geolocation.getCurrentPosition(ok, ko, {timeout:8000});
+    } else {
+        ko().then();
+    }
+}
+
+function detectExtension() {
+    const inExtension = location.protocol === 'chrome-extension:' || (window.chrome?.runtime?.id);
+    if (inExtension) {
+        document.documentElement.classList.add('ext');
+    } else {
+        document.documentElement.classList.remove('ext');
+    }
+}
+
 document.addEventListener('DOMContentLoaded',  () => {
     init();
-    fetchWeather(`Hoogland`);
+    // fetchWeather(`Hoogland`);
     // fetchFromLocation();
+    getLocation((loc) => {
+        if (loc) {
+            fetchWeather(`${loc.lat},${loc.lon}`);
+        } else {
+            console.error('Could not determine location; using Hoogland as default');
+            fetchWeather(`Hoogland`);
+        }
+    });
+    detectExtension();
 });
 
 // setInterval(() => window.location.reload(), WEERBERICHT_TIMEOUT);

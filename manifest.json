@@ -10,13 +10,10 @@
     "https://cdn.knmi.nl/*",
     "https://weerlive.nl/api/"
   ],
-  "background": {
-    "service_worker": "background.js"
-  },
   "action": {
     "default_icon": "images/knmi.png",
     "default_title": "Weerbericht",
-    "default_popup": "popup.html"
+    "default_popup": "index.html"
   },
   "icons": {
     "16": "images/weerbericht16.png",
