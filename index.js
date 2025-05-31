@@ -96,7 +96,6 @@ function prevMenuOption(actueleOptie) {
 }
 
 function onKeydown(e) {
-    // console.log(e.key)
     switch (e.key) {
         case 'ArrowRight':
             actueleOptie = nextMenuOption(actueleOptie);
@@ -142,29 +141,32 @@ function hideKaarten() {
     hide(kaart_wind);
 }
 
-function showMenu(id) {
-    hideKaarten();
-    show(hide_legend);
-    show(weertabel);
-
+function getActiveKaart(id) {
     switch(id) {
         case MENU_WIND:
-            show(kaart_wind);
-            break;
+            return kaart_wind;
         case MENU_TEMP:
-            show(kaart_temp);
-            break;
+            return kaart_temp;
         case MENU_VANDAAG:
-            show(kaart_vandaag);
-            hide(hide_legend);
-            hide(weertabel);
-            break;
+            return kaart_vandaag;
         case MENU_BUIEN:
-            show(kaart_buien);
-            hide(hide_legend);
-            hide(weertabel);
-            break;
+            return kaart_buien;
+        default:
+            return null;
     }
+}
+
+function showMenu(id) {
+    hideKaarten();
+
+    if (id=== MENU_WIND || id === MENU_TEMP) {
+        show(hide_legend);
+        show(weertabel);
+    } else {
+        hide(hide_legend);
+        hide(weertabel);
+    }
+    show(getActiveKaart(id));
 }
 
 function showTime() {
