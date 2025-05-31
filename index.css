@@ -20,7 +20,7 @@ img.kaart {
     clip-path: inset(3px);
 }
 .ext .content {
-    min-width: 550px;
+    min-width: 569px;
 }
 #alarmtxt {
     padding: 6px;
@@ -147,7 +147,7 @@ img.kaart {
 }
 .ext .hide-legenda {
     top: 76px;
-    height: 350px;
+    height: 362px;
     left: 12px;
 }
 .hide-legenda {
@@ -155,13 +155,13 @@ img.kaart {
     top:56px;
     left: 10px;
     height: 244px;
-    width: 52px;
+    width: 55px;
     background-color: #d4fffd;
 }
 .ext .weertabel {
-    top: 508px;
+    top: 520px;
     left: 18px;
-    width: 290px;
+    width: 300px;
 }
 .weertabel {
     position: absolute;
