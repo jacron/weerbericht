@@ -33,6 +33,13 @@ const MENU_BUIEN = 'menu_buien';
 const MENU_WIND = 'menu_wind';
 const MENU_TEMP = 'menu_temp';
 
+const MENU_SEQUENCE = [
+    MENU_VANDAAG,   // 0
+    MENU_TEMP,      // 1
+    MENU_BUIEN,     // 2
+    MENU_WIND       // 3
+];
+
 const DIV_TIJD = 'div_tijd';
 const kaart_vandaag = document.getElementById('vandaag-kaart');
 const kaart_buien = document.getElementById('buien-kaart');
@@ -72,40 +79,31 @@ function bindImg() {
     }
 }
 
-function nextMenuOption() {
-    /* vandaag > temp > buien > wind */
-    if (actueleOptie === MENU_VANDAAG) {
-        return MENU_WIND;
-    } else if (actueleOptie === MENU_WIND) {
-        return MENU_TEMP;
-    } else if (actueleOptie === MENU_TEMP) {
-        return MENU_BUIEN;
-    } else if (actueleOptie === MENU_BUIEN) {
-        return MENU_VANDAAG;
-    }
+function nextMenuOption(actueleOptie) {
+    const idx = MENU_SEQUENCE.indexOf(actueleOptie);
+    // idx === -1  betekent: ‘onbekende huidigeOptie’ ⇒ start opnieuw bij 0
+    const nextIndex = (idx + 1) % MENU_SEQUENCE.length || 0;
+    return MENU_SEQUENCE[nextIndex];
 }
 
-function prevMenuOption() {
-    if (actueleOptie === MENU_VANDAAG) {
-        return MENU_WIND;
-    } else if (actueleOptie === MENU_WIND) {
-        return MENU_BUIEN;
-    } else if (actueleOptie === MENU_BUIEN) {
-        return MENU_TEMP;
-    } else if (actueleOptie === MENU_TEMP) {
-        return MENU_WIND;
-    }
+function prevMenuOption(actueleOptie) {
+    const idx = MENU_SEQUENCE.indexOf(actueleOptie);
+    const len = MENU_SEQUENCE.length;
+    // Als idx -1 is, pak len-1; anders modulo-wrap naar links
+    const prevIndex = (idx === -1 ? len - 1
+        : (idx - 1 + len) % len);
+    return MENU_SEQUENCE[prevIndex];
 }
 
 function onKeydown(e) {
     // console.log(e.key)
     switch (e.key) {
         case 'ArrowRight':
-            actueleOptie = nextMenuOption();
+            actueleOptie = nextMenuOption(actueleOptie);
             showMenu(actueleOptie);
             break;
         case 'ArrowLeft':
-            actueleOptie = prevMenuOption();
+            actueleOptie = prevMenuOption(actueleOptie);
             showMenu(actueleOptie);
             break;
         case 'v':
@@ -144,23 +142,10 @@ function hideKaarten() {
     hide(kaart_wind);
 }
 
-function deselectMenuOpties() {
-    document.getElementById(MENU_TEMP).classList.remove('active');
-    document.getElementById(MENU_BUIEN).classList.remove('active');
-    document.getElementById(MENU_WIND).classList.remove('active');
-}
-
-function selectMenOption(id) {
-    document.getElementById(id).classList.add('active');
-}
-
 function showMenu(id) {
     hideKaarten();
     show(hide_legend);
     show(weertabel);
-
-    deselectMenuOpties();
-    selectMenOption(id);
 
     switch(id) {
         case MENU_WIND:
@@ -180,18 +165,6 @@ function showMenu(id) {
             hide(weertabel);
             break;
     }
-}
-
-function doMenu(e) {
-    actueleOptie = e.target.getAttribute('id');
-    showMenu(actueleOptie);
-}
-
-function bindMenu() {
-    document.getElementById(MENU_VANDAAG).addEventListener('click', doMenu);
-    document.getElementById(MENU_BUIEN).addEventListener('click', doMenu);
-    document.getElementById(MENU_TEMP).addEventListener('click', doMenu);
-    document.getElementById(MENU_WIND).addEventListener('click', doMenu);
 }
 
 function showTime() {
@@ -315,24 +288,9 @@ function fetchWeather(locatie) {
 
 function init() {
     bindImg();
-    bindMenu();
     bindKeys();
     showWindKrachtKaart();
 }
-
-// activate this function (and call) for mobile version (on the bike)
-// function fetchFromLocation() {
-//     navigator.geolocation.getCurrentPosition(
-//         (loc) => {
-//             const { coords } = loc;
-//             let { latitude, longitude } = coords;
-//             fetchWeather(`${latitude},${longitude}`);
-//         },
-//         (err) => {
-//             console.error(err);
-//         }
-//     );
-// }
 
 function getLocation(cb){          // cb({lat, lon} | null)
     const ok = pos => cb({lat:pos.coords.latitude, lon:pos.coords.longitude});
@@ -362,8 +320,6 @@ function detectExtension() {
 
 document.addEventListener('DOMContentLoaded',  () => {
     init();
-    // fetchWeather(`Hoogland`);
-    // fetchFromLocation();
     getLocation((loc) => {
         if (loc) {
             fetchWeather(`${loc.lat},${loc.lon}`);
