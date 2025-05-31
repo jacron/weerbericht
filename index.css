@@ -60,7 +60,7 @@ img.kaart {
 .controls {
     position: absolute;
     left: 10px;
-    top: 620px;
+    top: 520px;
     z-index: 1;
     line-height: 1.7;
 }
