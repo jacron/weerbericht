@@ -102,9 +102,6 @@ img.kaart {
     color: red;
     padding: 8px;
 }
-.weertabel td {
-    vertical-align: top;
-}
 .created {
     padding-right: 8px;
 }
@@ -149,7 +146,7 @@ img.kaart {
 }
 .ext .hide-legenda {
     top: 76px;
-    height: 362px;
+    height: 350px;
     left: 12px;
 }
 .hide-legenda {
@@ -161,9 +158,11 @@ img.kaart {
     background-color: #d4fffd;
 }
 .ext .weertabel {
-    top: 520px;
+    top: 510px;
     left: 18px;
     width: 300px;
+    border: none;
+    padding: 0;
 }
 .weertabel {
     position: absolute;
@@ -175,6 +174,11 @@ img.kaart {
     z-index: 1;
     line-height: 1.4;
     background-color: #dbdbdb;
+    border-bottom: 1px solid;
+    padding-left: 4px;
+}
+.weertabel td {
+    vertical-align: top;
 }
 .active {
     font-weight: bold;
