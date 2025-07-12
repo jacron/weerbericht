@@ -1,5 +1,5 @@
 // http://weerlive.nl/
-// const locatie = 'zeldert';
+const locatie = 'Zeldert';
 import {plotVandaag, plotWeek} from "./plot.js";
 import {fillVandaag, fillWeek} from "./table.js";
 import {getTime} from "./util.js";
@@ -326,8 +326,8 @@ document.addEventListener('DOMContentLoaded',  () => {
         if (loc) {
             fetchWeather(`${loc.lat},${loc.lon}`);
         } else {
-            console.error('Could not determine location; using Hoogland as default');
-            fetchWeather(`Hoogland`);
+            console.error(`Could not determine location; using ${locatie} as default`);
+            fetchWeather(locatie);
         }
     });
     detectExtension();
