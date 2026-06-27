@@ -312,7 +312,7 @@ function getLocation(cb){          // cb({lat, lon} | null)
 }
 
 function detectExtension() {
-    const inExtension = location.protocol === 'chrome-extension:' || (window.chrome?.runtime?.id);
+    const inExtension = location.protocol === 'chrome-extension:' || (globalThis.chrome?.runtime?.id);
     if (inExtension) {
         document.documentElement.classList.add('ext');
     } else {
@@ -332,6 +332,3 @@ document.addEventListener('DOMContentLoaded',  () => {
     });
     detectExtension();
 });
-
-// setInterval(() => window.location.reload(), WEERBERICHT_TIMEOUT);
-
