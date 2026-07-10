@@ -6,7 +6,7 @@ import {getTime} from "./util.js";
 
 const apikey = 'd5fce13661';
 const endpoint = 'weerlive_api_v2.php';
-const WEER_LIVE_API = `https://weerlive.nl/api/${endpoint}?key=${apikey}&locatie=`;  // ${locatie}`;
+const WEER_LIVE_API = `https://weerlive.nl/api/${endpoint}?key=${apikey}&locatie=`;
 const IMG_BINDINGS = [
     ['vandaag-kaart', 'https://cdn.knmi.nl/knmi/map/current/weather/forecast/kaart_verwachtingen_Vandaag_dag.gif'],
     ['windkracht-kaart', 'https://cdn.knmi.nl/knmi/map/page/weer/actueel-weer/windkracht.png'],
@@ -330,14 +330,29 @@ function getLocation(cb){          // cb({lat, lon} | null)
         .catch(()=>cb(null));
 
     if('geolocation' in navigator){
-        navigator.geolocation.getCurrentPosition(ok, ko, {timeout:8000});
+        navigator.permissions.query({name: 'geolocation'}).then(status => {
+            if (status.state === 'denied') {
+                showLocationWarning();
+                ko().then();
+            } else {
+                navigator.geolocation.getCurrentPosition(ok, ko, {timeout: 8000});
+            }
+        });
     } else {
         ko().then();
     }
 }
 
+function showLocationWarning() {
+    // Pas aan naar jouw extensie UI
+    const msg = document.createElement('div');
+    msg.textContent = 'Locatietoegang geblokkeerd. Zet dit aan via Systeeminstellingen → Privacy → Locatievoorzieningen.';
+    msg.style.cssText = 'color:orange; font-size:12px; padding:4px;';
+    document.body.prepend(msg);
+}
+
 function detectExtension() {
-    const inExtension = location.protocol === 'chrome-extension:' || (window.chrome?.runtime?.id);
+    const inExtension = location.protocol === 'chrome-extension:' || (globalThis.chrome?.runtime?.id);
     if (inExtension) {
         document.documentElement.classList.add('ext');
     } else {
@@ -357,6 +372,3 @@ document.addEventListener('DOMContentLoaded',  () => {
     });
     detectExtension();
 });
-
-// setInterval(() => window.location.reload(), WEERBERICHT_TIMEOUT);
-

@@ -22,7 +22,7 @@ img.kaart {
 }
 .ext .content {
     min-width: 569px;
-    height: 604px;
+    height: 600px;
 }
 #alarmtxt {
     padding: 6px;
@@ -158,7 +158,7 @@ img.kaart {
     background-color: #d4fffd;
 }
 .ext .weertabel {
-    top: 510px;
+    top: 507px;
     left: 18px;
     width: 300px;
     border: none;
