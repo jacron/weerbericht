@@ -111,6 +111,9 @@ function onKeydown(e) {
         case 'w':
             toggleWeekVerwachtingen();
             break;
+        case '2':
+            toggle24uVerwachtingen();
+            break;
         case 'Escape':
             if (hideVandaagVerwachtingen()) {
                 e.preventDefault();
@@ -229,18 +232,37 @@ function hideWeekVerwachtingen() {
     return false;
 }
 
+let vandaagCount = 0;
+
+function openVandaagVerwachtingen(result, count) {
+    if (vandaagCount !== count) {
+        fillVandaag(result, count);
+        plotVandaag(result, count);
+        vandaagCount = count;
+    }
+    weekOfVandaag = 'vandaag';
+    toggleDisplayVandaag('block');
+    toggleDisplayWeek('none');
+}
+
 function toggleVandaagVerwachtingen(result) {
     if (!result) result = liveweerResult;
     const verwachtingenVandaag = document.querySelector('.verwachtingen-vandaag');
     const curDisplay = verwachtingenVandaag.style.display;
-    if (!curDisplay || curDisplay === 'none') {
-        if (verwachtingenVandaag.querySelector('tr') === null) {
-            fillVandaag(result);
-            plotVandaag(result);
-        }
-        weekOfVandaag = 'vandaag';
-        toggleDisplayVandaag('block');
-        toggleDisplayWeek('none');
+    if (!curDisplay || curDisplay === 'none' || vandaagCount !== 10) {
+        openVandaagVerwachtingen(result, 10);
+    } else {
+        weekOfVandaag = '';
+        toggleDisplayVandaag('none');
+    }
+}
+
+function toggle24uVerwachtingen(result) {
+    if (!result) result = liveweerResult;
+    const verwachtingenVandaag = document.querySelector('.verwachtingen-vandaag');
+    const curDisplay = verwachtingenVandaag.style.display;
+    if (!curDisplay || curDisplay === 'none' || vandaagCount !== 24) {
+        openVandaagVerwachtingen(result, 24);
     } else {
         weekOfVandaag = '';
         toggleDisplayVandaag('none');
@@ -275,7 +297,10 @@ function getLiveweer(result) {
     });
     btnToggleWeek.addEventListener('click', () => {
         toggleWeekVerwachtingen(result);
-    })
+    });
+    document.getElementById('btnToggle24u').addEventListener('click', () => {
+        toggle24uVerwachtingen(result);
+    });
 }
 
 function onError(error) {

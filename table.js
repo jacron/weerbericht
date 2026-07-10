@@ -90,11 +90,12 @@ function fillWeek(result) {
     }
 }
 
-function fillVandaag(result) {
+function fillVandaag(result, count = 10) {
     const uur_verwachtingen = result.uur_verw;  // 24 items
     const tabel = document.getElementById("verw_tabel");
+    tabel.innerHTML = '';
     tabel.appendChild(headerRow(vandaagHeaders));
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < count; i++) {
         const tr = document.createElement('tr');
         populateRowVandaag(tr, uur_verwachtingen[i]);
         tabel.appendChild(tr);

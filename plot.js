@@ -210,13 +210,15 @@ function drawTempWeek(dagen, temperaturen) {
     });
 }
 
-function plotVandaag(result) {
+function plotVandaag(result, count = 10) {
+    Chart.getChart('chartWindVandaag')?.destroy();
+    Chart.getChart('chartTempVandaag')?.destroy();
     const uur_verwachtingen = result.uur_verw;  // 24 items
     const tijdstippen = [];
     const temperaturen = [];
     const windkracht = [];
     const windrichting = [];
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < count; i++) {
         const verw = uur_verwachtingen[i];
         tijdstippen.push(tweedeWoord(verw.uur));
         windkracht.push(verw.windbft);
