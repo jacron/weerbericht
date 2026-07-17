@@ -43,7 +43,7 @@ img.kaart {
 }
 .verwachtingen-vandaag {
     position: absolute;
-    top: 340px;
+    top: 280px;
     right: 20px;
     background-color: #defeff;
     z-index: 2;
@@ -197,10 +197,10 @@ canvas {
     z-index: 8;
 }
 #chartWindVandaag {
-    top: 34px;
+    top: 14px;
 }
 #chartTempVandaag {
-    top: 170px;
+    top: 150px;
 }
 #chartWindWeek {
     top: 34px;
@@ -230,14 +230,11 @@ canvas {
 #verw_tabel {
     border-collapse: collapse;
 }
-#verw_tabel td {
-    padding: 4px;
-}
 #verw_tabel td:nth-child(3) {
     padding-right: 0;
 }
 #verw_tabel td:nth-child(1) {
-    padding: 4px 16px 4px 0;
+    padding: 1px 16px 4px 0;
 }
 .vandaagTemp {
     color: red;

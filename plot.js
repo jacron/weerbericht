@@ -1,4 +1,4 @@
-import {dagVanDeWeek, tweedeWoord} from "./util.js";
+import {dagVanDeWeek, tweedeWoord, selecteerUurVerwachtingen} from "./util.js";
 
 function drawWindVandaag(tijdstippen, windkracht, windrichting) {
     const ctx = document.getElementById('chartWindVandaag').getContext('2d');
@@ -213,13 +213,12 @@ function drawTempWeek(dagen, temperaturen) {
 function plotVandaag(result, count = 10) {
     Chart.getChart('chartWindVandaag')?.destroy();
     Chart.getChart('chartTempVandaag')?.destroy();
-    const uur_verwachtingen = result.uur_verw;  // 24 items
+    const uur_verwachtingen = selecteerUurVerwachtingen(result.uur_verw, count);
     const tijdstippen = [];
     const temperaturen = [];
     const windkracht = [];
     const windrichting = [];
-    for (let i = 0; i < count; i++) {
-        const verw = uur_verwachtingen[i];
+    for (const verw of uur_verwachtingen) {
         tijdstippen.push(tweedeWoord(verw.uur));
         windkracht.push(verw.windbft);
         windrichting.push(verw.windr);

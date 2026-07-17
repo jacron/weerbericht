@@ -27,4 +27,11 @@ function getTime() {
     return today.getHours() + ":" + fillZero(today.getMinutes()) + " u.";
 }
 
-export {tweedeWoord, dag, dagVanDeWeek, getTime}
+function selecteerUurVerwachtingen(uur_verwachtingen, count) {
+    if (count === 24) {
+        return uur_verwachtingen.filter(u => parseInt(tweedeWoord(u.uur), 10) % 2 === 0);
+    }
+    return uur_verwachtingen.slice(0, count);
+}
+
+export {tweedeWoord, dag, dagVanDeWeek, getTime, selecteerUurVerwachtingen}

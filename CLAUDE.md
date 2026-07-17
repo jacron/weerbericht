@@ -23,11 +23,11 @@ The extension popup (`index.html`) is the sole entry point. On load it:
 - `index.js` — main orchestrator: geolocation, fetch, menu navigation, event handling
 - `plot.js` — Chart.js line charts for today's hourly and weekly wind/temperature
 - `table.js` — builds HTML tables for hourly (today) and weekly forecasts
-- `util.js` — date/time helpers (`dagVanDeWeek`, `tweedeWoord`, `getTime`)
+- `util.js` — date/time helpers (`dagVanDeWeek`, `tweedeWoord`, `getTime`) and `selecteerUurVerwachtingen` (picks which `uur_verw` entries table.js/plot.js render)
 
 **Third-party libraries** are vendored locally in `third_party/` (Chart.js and chartjs-plugin-datalabels) and loaded via `<script>` tags — they are globals (`Chart`, `ChartDataLabels`), not imports.
 
-**Menu system:** Four views cycle with arrow keys — `menu_vandaag` (today map), `menu_temp` (temperature map), `menu_buien` (rain radar), `menu_wind` (wind map). Press `v` / `w` to toggle hourly/weekly forecast panels; `Escape` to close them.
+**Menu system:** Four views cycle with arrow keys — `menu_vandaag` (today map), `menu_temp` (temperature map), `menu_buien` (rain radar), `menu_wind` (wind map). Press `v` to toggle the hourly forecast panel (first 12 `uur_verw` entries), `w` to toggle the weekly panel, `2` to toggle the 24-hour forecast panel (all 24 `uur_verw` entries filtered down to even hours, e.g. 08:00, 10:00, 12:00…, via `selecteerUurVerwachtingen`); `Escape` to close them.
 
 **API data shape:** The Weerlive response contains `liveweer[0]` (current conditions), `wk_verw` (5-day forecast), and `uur_verw` (24-hour forecast). Field names are Dutch (e.g. `windbft`, `windr`, `neersl`, `image`).
 

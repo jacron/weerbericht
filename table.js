@@ -1,4 +1,4 @@
-import {dag, dagVanDeWeek, tweedeWoord} from "./util.js";
+import {dag, dagVanDeWeek, tweedeWoord, selecteerUurVerwachtingen} from "./util.js";
 
 const vandaagHeaders = [
     '', '', '', '', 'regen', ''
@@ -91,13 +91,13 @@ function fillWeek(result) {
 }
 
 function fillVandaag(result, count = 10) {
-    const uur_verwachtingen = result.uur_verw;  // 24 items
+    const uur_verwachtingen = selecteerUurVerwachtingen(result.uur_verw, count);
     const tabel = document.getElementById("verw_tabel");
     tabel.innerHTML = '';
     tabel.appendChild(headerRow(vandaagHeaders));
-    for (let i = 0; i < count; i++) {
+    for (const u of uur_verwachtingen) {
         const tr = document.createElement('tr');
-        populateRowVandaag(tr, uur_verwachtingen[i]);
+        populateRowVandaag(tr, u);
         tabel.appendChild(tr);
     }
 }

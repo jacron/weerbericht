@@ -249,8 +249,8 @@ function toggleVandaagVerwachtingen(result) {
     if (!result) result = liveweerResult;
     const verwachtingenVandaag = document.querySelector('.verwachtingen-vandaag');
     const curDisplay = verwachtingenVandaag.style.display;
-    if (!curDisplay || curDisplay === 'none' || vandaagCount !== 10) {
-        openVandaagVerwachtingen(result, 10);
+    if (!curDisplay || curDisplay === 'none' || vandaagCount !== 12) {
+        openVandaagVerwachtingen(result, 12);
     } else {
         weekOfVandaag = '';
         toggleDisplayVandaag('none');
